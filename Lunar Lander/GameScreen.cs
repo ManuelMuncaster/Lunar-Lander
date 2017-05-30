@@ -24,6 +24,9 @@ namespace Lunar_Lander
         {
             InitializeComponent();
             Onstart();
+
+            gameTimer.Enabled = true;
+            gameTimer.Start();
         }
 
         public void Onstart()
