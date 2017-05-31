@@ -16,7 +16,8 @@ namespace Lunar_Lander
         Boolean leftArrowDown, rightArrowDown, downArrowDown, upArrowDown, escapeDown;
 
         //creating graphic objects
-        SolidBrush drawBrush = new SolidBrush(Color.Black);
+        SolidBrush drawBrush = new SolidBrush(Color.White);
+        Font drawFont = new Font("Courier", 16, FontStyle.Bold);
 
         Lander lander;
 
@@ -35,16 +36,17 @@ namespace Lunar_Lander
             int yLander = 400;
             int xSpeedLander = 0;
             int ySpeedLander = 0;
-            int angleLander = 0;
+            int angleSpeedLander = 4;
+            int angleLander = 90;
             int imageLander = 0;
             //Temp values for drawing test rectangle 
             int widthLander = 20;
             int heightLander = 20;
 
-            lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, angleLander, imageLander, widthLander, heightLander);
+            lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, angleLander, angleSpeedLander, imageLander, widthLander, heightLander);
         }
 
-        private void GameScreen_KeyDown(object sender, KeyEventArgs e)
+        private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -94,11 +96,6 @@ namespace Lunar_Lander
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-
-        }
-
-        private void GameScreen_Paint(object sender, PaintEventArgs e)
-        {
             if (leftArrowDown == true)
             {
                 lander.Turn("left");
@@ -108,6 +105,32 @@ namespace Lunar_Lander
             {
                 lander.Turn("right");
             }
+
+            if (upArrowDown == true)
+            {
+                lander.Boost("on");
+            }
+
+            //angleLabel.Text = angleText;
+
+            Refresh();
+        }
+
+        private void GameScreen_Paint(object sender, PaintEventArgs e)
+        {
+            //find the centre of the hero to set the origin point where rotation will happen
+            e.Graphics.TranslateTransform(lander.width / 2 + lander.x, lander.width / 2 + lander.y);
+
+            //rotate by the given angle for the hero
+            e.Graphics.RotateTransform(lander.angle);
+
+            // draw the object in the middle of the rotated origin point
+            e.Graphics.FillRectangle(drawBrush, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
+
+            //reset to original origin point
+            e.Graphics.ResetTransform();
+
+            e.Graphics.DrawString(lander.angle + "", drawFont, drawBrush, 300, 300);
         }
 
 
