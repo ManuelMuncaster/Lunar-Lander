@@ -8,9 +8,10 @@ namespace Lunar_Lander
 {
     class Lander
     {
-        public int x, y, xSpeed, ySpeed, angle, angleSpeed, image, width, height;
+        public int angle, angleSpeed, image, width, height;
+        public double x, y, xSpeed, ySpeed;
 
-        public Lander (int _x, int _y, int _xSpeed, int _ySpeed, int _angle, int _angleSpeed, int _image, int _width, int _height)
+        public Lander (double _x, double _y, double _xSpeed, double _ySpeed, int _angle, int _angleSpeed, int _image, int _width, int _height)
         {
             x = _x;
             y = _y;
@@ -45,18 +46,42 @@ namespace Lunar_Lander
 
         public void Boost (string engage)
         {
+
             if (engage == "on")
             {
-                if (angle == 0)
+                if (angle == 90)
                 {
                     y = y - 5;
                 }
 
-                if (angle <= 10 && angle != 0)
+                if (angle == 2)
                 {
-                    y = y - 5;
-                    x = x + 1;
-                }  
+                    x = x - 5;
+                } 
+                
+                if (angle > 2 && angle <= 10)
+                {
+                    y = y - 0.2;
+                    x = x - 4.8;
+                }
+                
+                if (angle >= 10 && angle <= 20)
+                {
+                    y = y - 0.4;
+                    x = x - 4.6;
+                }
+
+                if (angle >= 20 && angle <= 30)
+                {
+                    y = y - 0.6;
+                    x = x - 4.4;
+                }
+
+                if (angle >= 30 && angle <= 40)
+                {
+                    y = y - 0.8;
+                    x = x - 4.2;
+                }
             }
         }
     }

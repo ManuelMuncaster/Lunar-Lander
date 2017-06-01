@@ -32,8 +32,8 @@ namespace Lunar_Lander
 
         public void Onstart()
         {
-            int xLander = 100;
-            int yLander = 400;
+            int xLander = 500;
+            int yLander = 500;
             int xSpeedLander = 0;
             int ySpeedLander = 0;
             int angleSpeedLander = 4;
@@ -111,15 +111,17 @@ namespace Lunar_Lander
                 lander.Boost("on");
             }
 
-            //angleLabel.Text = angleText;
 
             Refresh();
         }
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
+            float x2 = Convert.ToSingle(lander.x);
+            float y2 = Convert.ToSingle(lander.y);
+
             //find the centre of the hero to set the origin point where rotation will happen
-            e.Graphics.TranslateTransform(lander.width / 2 + lander.x, lander.width / 2 + lander.y);
+            e.Graphics.TranslateTransform(lander.width / 2 + x2, lander.width / 2 + y2);
 
             //rotate by the given angle for the hero
             e.Graphics.RotateTransform(lander.angle);
@@ -130,7 +132,10 @@ namespace Lunar_Lander
             //reset to original origin point
             e.Graphics.ResetTransform();
 
+            //Temp Angle reading
             e.Graphics.DrawString(lander.angle + "", drawFont, drawBrush, 300, 300);
+            e.Graphics.DrawString(lander.x + "", drawFont, drawBrush, 350, 300);
+            e.Graphics.DrawString(lander.y + "", drawFont, drawBrush, 400, 300);
         }
 
 
