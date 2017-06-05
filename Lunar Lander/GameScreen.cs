@@ -34,16 +34,17 @@ namespace Lunar_Lander
         {
             int xLander = 500;
             int yLander = 500;
-            int xSpeedLander = 0;
-            int ySpeedLander = 0;
-            int angleSpeedLander = 4;
+            int xSpeedLander = 5;
+            int ySpeedLander = 5;
+            int speedMultiLander = 1;
+            int angleSpeedLander = 3;
             int angleLander = 90;
             int imageLander = 0;
             //Temp values for drawing test rectangle 
             int widthLander = 20;
             int heightLander = 20;
 
-            lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, angleLander, angleSpeedLander, imageLander, widthLander, heightLander);
+            lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, speedMultiLander, angleLander, angleSpeedLander, imageLander, widthLander, heightLander);
         }
 
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -108,8 +109,22 @@ namespace Lunar_Lander
 
             if (upArrowDown == true)
             {
-                lander.Boost("on");
+                lander.Boost("engage");
+                //lander.speedMulti = lander.speedMulti + 0.1;
+
+                //lander.xSpeed = lander.xSpeed * lander.speedMulti;
+                //lander.ySpeed = lander.ySpeed * lander.speedMulti;
+
+                //float thetaAngle = (90 - lander.angle);
+
+                //double xSpeed = Math.Cos(thetaAngle * Math.PI / 180.0);
+                //double ySpeed = Math.Sin(thetaAngle * Math.PI / 180.0);
+
+                //Lander l = new Lander(lander.x, lander.y, (float)lander.xSpeed, (float)-lander.ySpeed, lander.angle, lander.angleSpeed, lander.image, lander.width, lander.height);
             }
+
+
+            lander.y++;
 
 
             Refresh();
@@ -136,6 +151,7 @@ namespace Lunar_Lander
             e.Graphics.DrawString(lander.angle + "", drawFont, drawBrush, 300, 300);
             e.Graphics.DrawString(lander.x + "", drawFont, drawBrush, 350, 300);
             e.Graphics.DrawString(lander.y + "", drawFont, drawBrush, 400, 300);
+            e.Graphics.DrawString(lander.speedMulti + "", drawFont, drawBrush, 450, 300);
         }
 
 
