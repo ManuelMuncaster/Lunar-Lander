@@ -34,8 +34,8 @@ namespace Lunar_Lander
         {
             int xLander = 500;
             int yLander = 500;
-            int xSpeedLander = 5;
-            int ySpeedLander = 5;
+            int xSpeedLander = 1;
+            int ySpeedLander = 1;
             int speedMultiLander = 1;
             int angleSpeedLander = 3;
             int angleLander = 90;
@@ -110,7 +110,8 @@ namespace Lunar_Lander
             if (upArrowDown == true)
             {
                 lander.Boost("engage");
-                //lander.speedMulti = lander.speedMulti + 0.1;
+                lander.ySpeed = lander.ySpeed - .01;
+                //lander.speedMulti = lander.speedMulti + 0.001;
 
                 //lander.xSpeed = lander.xSpeed * lander.speedMulti;
                 //lander.ySpeed = lander.ySpeed * lander.speedMulti;
@@ -123,9 +124,15 @@ namespace Lunar_Lander
                 //Lander l = new Lander(lander.x, lander.y, (float)lander.xSpeed, (float)-lander.ySpeed, lander.angle, lander.angleSpeed, lander.image, lander.width, lander.height);
             }
 
+            //if (lander.speedMulti > 1)
+            //{
+            //    lander.speedMulti = lander.speedMulti - 0.0001;
 
-            lander.y++;
-
+            //}
+            //lander.y++;
+           // lander.xSpeed = lander.xSpeed * lander.speedMulti;
+            //lander.ySpeed = lander.ySpeed * lander.speedMulti;
+            lander.y = lander.y + lander.ySpeed;
 
             Refresh();
         }
