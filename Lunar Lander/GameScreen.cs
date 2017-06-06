@@ -34,8 +34,8 @@ namespace Lunar_Lander
         {
             int xLander = 500;
             int yLander = 500;
-            int xSpeedLander = 5;
-            int ySpeedLander = 5;
+            int xSpeedLander = 1;
+            int ySpeedLander = 1;
             int speedMultiLander = 1;
             int angleSpeedLander = 3;
             int angleLander = 90;
@@ -110,29 +110,18 @@ namespace Lunar_Lander
             if (upArrowDown == true)
             {
                 lander.Boost("engage");
-                lander.ySpeed = lander.ySpeed - .01;
-                //lander.speedMulti = lander.speedMulti + 0.001;
 
-                //lander.xSpeed = lander.xSpeed * lander.speedMulti;
-                //lander.ySpeed = lander.ySpeed * lander.speedMulti;
-
-                //float thetaAngle = (90 - lander.angle);
-
-                //double xSpeed = Math.Cos(thetaAngle * Math.PI / 180.0);
-                //double ySpeed = Math.Sin(thetaAngle * Math.PI / 180.0);
-
-                //Lander l = new Lander(lander.x, lander.y, (float)lander.xSpeed, (float)-lander.ySpeed, lander.angle, lander.angleSpeed, lander.image, lander.width, lander.height);
+                if (lander.ySpeed > 2.7)
+                {
+                    lander.ySpeed -= 0.7f;
+                }
+               
             }
 
-            //if (lander.speedMulti > 1)
-            //{
-            //    lander.speedMulti = lander.speedMulti - 0.0001;
-
-            //}
-            //lander.y++;
-           // lander.xSpeed = lander.xSpeed * lander.speedMulti;
-            //lander.ySpeed = lander.ySpeed * lander.speedMulti;
+            lander.ySpeed += 0.2f;
             lander.y = lander.y + lander.ySpeed;
+
+         
 
             Refresh();
         }
