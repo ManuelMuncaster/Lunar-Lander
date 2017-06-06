@@ -34,8 +34,8 @@ namespace Lunar_Lander
         {
             int xLander = 500;
             int yLander = 500;
-            int xSpeedLander = 1;
-            int ySpeedLander = 1;
+            int xSpeedLander = 5;
+            int ySpeedLander = 5;
             int speedMultiLander = 1;
             int angleSpeedLander = 3;
             int angleLander = 90;
