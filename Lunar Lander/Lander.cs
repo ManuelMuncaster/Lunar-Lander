@@ -48,146 +48,142 @@ namespace Lunar_Lander
         public void Boost (string engage)
         {
 
-            if (angle == 90)
+            if (angle == 90 && ySpeed >= -5.7)
             {
-                y = y - ySpeed;
+                ySpeed -= 0.1f;
             }
 
-            if (angle == 180)
+           if (angle == 0 && xSpeed <= 4.9)
             {
-                x = x + xSpeed;
+                xSpeed += 0.02f;
             }
 
-            if (angle == 0)
+           if (angle == 180 && xSpeed >= -5)
             {
-                x = x - xSpeed;
+                xSpeed -= 0.02f;
             }
 
             if (angle > 0 && angle <= 10)
             {
-                ySpeed = 0.5;
-                y = y - ySpeed;
-                x = x - xSpeed;
+                xSpeed += 0.02f;
             }
 
             if (angle >= 10 && angle <= 20)
             {
-                ySpeed = 1;
-                y = y - ySpeed;
-                x = x - xSpeed;
+                xSpeed += 0.02f;
             }
 
-            if (angle >= 20 && angle <= 30)
-            {
-                ySpeed = 1.5;
-                y = y - ySpeed;
-                x = x - xSpeed;
-            }
+            //if (angle >= 20 && angle <= 30)
+            //{
+            //    ySpeed = 1.5;
+            //    y = y - ySpeed;
+            //    x = x - xSpeed;
+            //}
 
-            if (angle >= 30 && angle <= 40)
-            {
-                ySpeed = 2;
-                y = y - ySpeed;
-                x = x - xSpeed;
-            }
+            //if (angle >= 30 && angle <= 40)
+            //{
+            //    ySpeed = 2;
+            //    y = y - ySpeed;
+            //    x = x - xSpeed;
+            //}
 
-            if (angle >= 40 && angle <= 50)
-            {
-                ySpeed = 2.5;
-                y = y - ySpeed;
-                x = x - xSpeed;
-            }
+            //if (angle >= 40 && angle <= 50)
+            //{
+            //    ySpeed = 2.5;
+            //    y = y - ySpeed;
+            //    x = x - xSpeed;
+            //}
 
-            if (angle >= 50 && angle <= 60)
-            {
-                ySpeed = 3;
-                y = y - ySpeed;
-                x = x - xSpeed;
-            }
+            //if (angle >= 50 && angle <= 60)
+            //{
+            //    ySpeed = 3;
+            //    y = y - ySpeed;
+            //    x = x - xSpeed;
+            //}
 
-            if (angle >= 60 && angle <= 70)
-            {
-                ySpeed = 3.5;
-                y = y - ySpeed;
-                x = x - xSpeed;
-            }
+            //if (angle >= 60 && angle <= 70)
+            //{
+            //    ySpeed = 3.5;
+            //    y = y - ySpeed;
+            //    x = x - xSpeed;
+            //}
 
-            if (angle >= 70 && angle <= 80)
-            {
-                ySpeed = 4;
-                y = y - ySpeed;
-                x = x - xSpeed;
-            }
+            //if (angle >= 70 && angle <= 80)
+            //{
+            //    ySpeed = 4;
+            //    y = y - ySpeed;
+            //    x = x - xSpeed;
+            //}
 
-            if (angle >= 80 && angle <= 89)
-            {
-                ySpeed = 4.5;
-                y = y - ySpeed;
-                x = x - xSpeed;
-            }
+            //if (angle >= 80 && angle <= 89)
+            //{
+            //    ySpeed = 4.5;
+            //    y = y - ySpeed;
+            //    x = x - xSpeed;
+            //}
 
-            if (angle >= 91 && angle <= 100)
-            {
-                ySpeed = 4.5;
-                y = y - ySpeed;
-                x = x + xSpeed;
-            }
+            //if (angle >= 91 && angle <= 100)
+            //{
+            //    ySpeed = 4.5;
+            //    y = y - ySpeed;
+            //    x = x + xSpeed;
+            //}
 
-            if (angle >= 100 && angle <= 110)
-            {
-                ySpeed = 4;
-                y = y - ySpeed;
-                x = x + xSpeed;
-            }
+            //if (angle >= 100 && angle <= 110)
+            //{
+            //    ySpeed = 4;
+            //    y = y - ySpeed;
+            //    x = x + xSpeed;
+            //}
 
-            if (angle >= 110 && angle <= 120)
-            {
-                ySpeed = 3.5;
-                y = y - ySpeed;
-                x = x + xSpeed;
-            }
+            //if (angle >= 110 && angle <= 120)
+            //{
+            //    ySpeed = 3.5;
+            //    y = y - ySpeed;
+            //    x = x + xSpeed;
+            //}
 
-            if (angle >= 120 && angle <= 130)
-            {
-                ySpeed = 3;
-                y = y - ySpeed;
-                x = x + xSpeed;
-            }
+            //if (angle >= 120 && angle <= 130)
+            //{
+            //    ySpeed = 3;
+            //    y = y - ySpeed;
+            //    x = x + xSpeed;
+            //}
 
-            if (angle >= 130 && angle <= 140)
-            {
-                ySpeed = 2.5;
-                y = y - ySpeed;
-                x = x + xSpeed;
-            }
+            //if (angle >= 130 && angle <= 140)
+            //{
+            //    ySpeed = 2.5;
+            //    y = y - ySpeed;
+            //    x = x + xSpeed;
+            //}
 
-            if (angle >= 140 && angle <= 150)
-            {
-                ySpeed = 2;
-                y = y - ySpeed;
-                x = x + xSpeed;
-            }
+            //if (angle >= 140 && angle <= 150)
+            //{
+            //    ySpeed = 2;
+            //    y = y - ySpeed;
+            //    x = x + xSpeed;
+            //}
 
-            if (angle >= 150 && angle <= 160)
-            {
-                ySpeed = 1.5;
-                y = y - ySpeed;
-                x = x + xSpeed;
-            }
+            //if (angle >= 150 && angle <= 160)
+            //{
+            //    ySpeed = 1.5;
+            //    y = y - ySpeed;
+            //    x = x + xSpeed;
+            //}
 
-            if (angle >= 160 && angle <= 170)
-            {
-                ySpeed = 1;
-                y = y - ySpeed;
-                x = x + xSpeed;
-            }
+            //if (angle >= 160 && angle <= 170)
+            //{
+            //    ySpeed = 1;
+            //    y = y - ySpeed;
+            //    x = x + xSpeed;
+            //}
 
-            if (angle >= 170 && angle <= 179)
-            {
-                ySpeed = 0.5;
-                y = y - ySpeed;
-                x = x + xSpeed;
-            }
+            //if (angle >= 170 && angle <= 179)
+            //{
+            //    ySpeed = 0.5;
+            //    y = y - ySpeed;
+            //    x = x + xSpeed;
+            //}
         }
-        }
+    }
     }
