@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Media;
 
 namespace Lunar_Lander
 {
@@ -50,7 +51,7 @@ namespace Lunar_Lander
 
             if (angle == 90 && ySpeed >= -5.7)
             {
-                ySpeed -= 0.1f;
+                ySpeed -= 0.25f;
             }
 
            if (angle == 0 && xSpeed <= 4.9)

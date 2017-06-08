@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Lunar_Lander
 {
@@ -41,8 +42,8 @@ namespace Lunar_Lander
             int angleLander = 90;
             int imageLander = 0;
             //Temp values for drawing test rectangle 
-            int widthLander = 20;
-            int heightLander = 20;
+            int widthLander = 90;
+            int heightLander = 90;
 
             lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, speedMultiLander, angleLander, angleSpeedLander, imageLander, widthLander, heightLander);
         }
@@ -113,12 +114,12 @@ namespace Lunar_Lander
 
                 if (lander.ySpeed > 2.7)
                 {
-                    lander.ySpeed -= 0.7f;
+                    lander.ySpeed -= 0.5f;
                 }
                
             }
 
-            lander.ySpeed += 0.2f;
+            lander.ySpeed += 0.05f;
             lander.y = lander.y + lander.ySpeed;
 
          
@@ -138,7 +139,8 @@ namespace Lunar_Lander
             e.Graphics.RotateTransform(lander.angle);
 
             // draw the object in the middle of the rotated origin point
-            e.Graphics.FillRectangle(drawBrush, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
+            //e.Graphics.FillRectangle(drawBrush, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
+            e.Graphics.DrawImage(Properties.Resources.lander90, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
 
             //reset to original origin point
             e.Graphics.ResetTransform();
