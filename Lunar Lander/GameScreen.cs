@@ -120,7 +120,9 @@ namespace Lunar_Lander
             }
 
             lander.ySpeed += 0.05f;
+            lander.xSpeed += 0.01f;
             lander.y = lander.y + lander.ySpeed;
+            lander.x = lander.x + lander.xSpeed;
 
          
 
@@ -146,10 +148,11 @@ namespace Lunar_Lander
             e.Graphics.ResetTransform();
 
             //Temp Angle reading
-            e.Graphics.DrawString(lander.angle + "", drawFont, drawBrush, 300, 300);
-            e.Graphics.DrawString(lander.x + "", drawFont, drawBrush, 350, 300);
-            e.Graphics.DrawString(lander.y + "", drawFont, drawBrush, 400, 300);
-            e.Graphics.DrawString(lander.speedMulti + "", drawFont, drawBrush, 450, 300);
+            e.Graphics.DrawString(lander.angle + "", drawFont, drawBrush, 100, 100);
+            e.Graphics.DrawString(lander.x + "X", drawFont, drawBrush, 200, 100);
+            e.Graphics.DrawString(lander.xSpeed + "xSpeed", drawFont, drawBrush, 500, 100);
+            e.Graphics.DrawString(lander.y + "Y", drawFont, drawBrush, 200, 200);
+            e.Graphics.DrawString(lander.ySpeed + "ySpeed", drawFont, drawBrush, 500, 200);
         }
 
 
