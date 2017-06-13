@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Media;
+using Lines;
 
 namespace Lunar_Lander
 {
     class Lander
     {
         public int angle, angleSpeed, image, width, height;
-        public double x, y, xSpeed, ySpeed, speedMulti;
+        public double x, y, xSpeed, ySpeed;
 
-        public Lander (double _x, double _y, double _xSpeed, double _ySpeed, double _speedMulti, int _angle, int _angleSpeed, int _image, int _width, int _height)
+        public Lander (double _x, double _y, double _xSpeed, double _ySpeed, int _angle, int _angleSpeed, int _image, int _width, int _height)
         {
             x = _x;
             y = _y;
             xSpeed = _xSpeed;
             ySpeed = _ySpeed;
-            speedMulti = _speedMulti;
             angle = _angle;
             angleSpeed = _angleSpeed;
             image = _image;
@@ -44,6 +44,11 @@ namespace Lunar_Lander
                     angle += angleSpeed;
                 }
             }
+        }
+
+        public void Collide (Boolean didIntersect)
+        {
+
         }
 
         public void Boost (string engage)
