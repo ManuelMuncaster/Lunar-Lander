@@ -63,9 +63,19 @@ namespace Lunar_Lander.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap lander90 {
+        internal static System.Drawing.Bitmap landerEdit {
             get {
-                object obj = ResourceManager.GetObject("lander90", resourceCulture);
+                object obj = ResourceManager.GetObject("landerEdit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap moonSurface {
+            get {
+                object obj = ResourceManager.GetObject("moonSurface", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

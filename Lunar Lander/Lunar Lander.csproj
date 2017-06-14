@@ -111,6 +111,15 @@
   <ItemGroup>
     <None Include="Resources\lander90.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\landerEdit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moonSurface2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moonSurface.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -22,8 +22,8 @@ namespace Lunar_Lander
         Font drawFont = new Font("Courier", 16, FontStyle.Bold);
         Pen drawPen = new Pen(Color.White);
 
-        List<int> moonLines = new List<int>();
-        List<int> landerLines = new List<int>();
+        List<LineSegment> moonLines = new List<LineSegment>();
+        List<LineSegment> landerLines = new List<LineSegment>();
 
         Lander lander;
         Boolean didIntersect;
@@ -53,13 +53,13 @@ namespace Lunar_Lander
             int x2 = 0;
             int y2 = 0;
 
-            //lander.x = Convert.ToInt64(x2);
-            //lander.y = Convert.ToInt64(y2);
+            LineSegment landerL1 = new LineSegment(lander.height - 115, lander.width - 75, lander.height - 70, lander.width - 75);
+            LineSegment landerL2 = new LineSegment(lander.height - 115, lander.width - 113, lander.height - 70, lander.width - 113);
+            LineSegment landerL3 = new LineSegment(lander.height - 70, lander.width - 75, lander.height - 70, lander.width - 113);
 
-            LineSegment landerL1 = new LineSegment(xLander + 5, yLander - 5, xLander + 5, yLander + 5);
-            //LineSegment landerL2 = new LineSegment(xLander + 5, y2 - 5, x2, y2 -5);
-            //LineSegment landerL3 = new LineSegment();
-
+            landerLines.Add(landerL1);
+            landerLines.Add(landerL2);
+            landerLines.Add(landerL3);
 
             lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, angleLander, angleSpeedLander, imageLander, widthLander, heightLander);
         }
@@ -158,9 +158,11 @@ namespace Lunar_Lander
             e.Graphics.RotateTransform(lander.angle);
 
             // draw the object in the middle of the rotated origin point
-            e.Graphics.DrawLine(drawPen, x2 + 5, y2 - 5, x2 + 5, y2 + 5);
+            e.Graphics.DrawLine(drawPen, lander.height - 115, lander.width - 75, lander.height - 70, lander.width - 75);
+            e.Graphics.DrawLine(drawPen, lander.height - 115, lander.width - 113, lander.height - 70, lander.width - 113);
+            e.Graphics.DrawLine(drawPen, lander.height - 70, lander.width - 75, lander.height - 70, lander.width - 113);
 
-            e.Graphics.DrawImage(Properties.Resources.lander90, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
+            e.Graphics.DrawImage(Properties.Resources.landerEdit, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
             //reset to original origin point
             e.Graphics.ResetTransform();
 
@@ -172,8 +174,9 @@ namespace Lunar_Lander
             e.Graphics.DrawString(lander.ySpeed + "ySpeed", drawFont, drawBrush, 500, 200);
 
             //Drawing World
+            e.Graphics.DrawImage(Properties.Resources.moonSurface, 0, 50);
 
-            e.Graphics.DrawLine(drawPen, 500, 500, 600, 600);
+            
         }
 
 
