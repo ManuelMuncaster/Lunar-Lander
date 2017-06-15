@@ -22,11 +22,11 @@ namespace Lunar_Lander
         Font drawFont = new Font("Courier", 16, FontStyle.Bold);
         Pen drawPen = new Pen(Color.White);
 
-        List<LineSegment> moonLines = new List<LineSegment>();
-        List<LineSegment> landerLines = new List<LineSegment>();
+        public List<LineSegment> moonLines = new List<LineSegment>();
+        public List<LineSegment> landerLines = new List<LineSegment>();
 
         Lander lander;
-        Boolean didIntersect;
+        Boolean didIntersect = false;
 
         public GameScreen()
         {
@@ -39,8 +39,8 @@ namespace Lunar_Lander
 
         public void Onstart()
         {
-            int xLander = 500;
-            int yLander = 500;
+            int xLander = 400;
+            int yLander = 400;
             int xSpeedLander = 1;
             int ySpeedLander = 1;
             int speedMultiLander = 1;
@@ -53,6 +53,8 @@ namespace Lunar_Lander
             int x2 = 0;
             int y2 = 0;
 
+            lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, angleLander, angleSpeedLander, imageLander, widthLander, heightLander);
+
             LineSegment landerL1 = new LineSegment(lander.height - 115, lander.width - 75, lander.height - 70, lander.width - 75);
             LineSegment landerL2 = new LineSegment(lander.height - 115, lander.width - 113, lander.height - 70, lander.width - 113);
             LineSegment landerL3 = new LineSegment(lander.height - 70, lander.width - 75, lander.height - 70, lander.width - 113);
@@ -61,7 +63,55 @@ namespace Lunar_Lander
             landerLines.Add(landerL2);
             landerLines.Add(landerL3);
 
-            lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, angleLander, angleSpeedLander, imageLander, widthLander, heightLander);
+            LineSegment moonL1 = new LineSegment(0, 0, 39, 231);
+            LineSegment moonL2 = new LineSegment(39, 231, 140, 308);
+            LineSegment moonL3 = new LineSegment(140, 308, 203, 309);
+            LineSegment moonL4 = new LineSegment(203, 309, 256, 491);
+            LineSegment moonL5 = new LineSegment(256, 491, 306, 432);
+            LineSegment moonL6 = new LineSegment(306, 432, 333, 500);
+            LineSegment moonL7 = new LineSegment(333, 500, 371, 528);
+            LineSegment moonL8 = new LineSegment(371, 528, 388, 627);
+            LineSegment moonL9 = new LineSegment(388, 627, 473, 627);
+            LineSegment moonL10 = new LineSegment(473, 627, 506, 552);
+            LineSegment moonL11 = new LineSegment(506, 552, 535, 607);
+            LineSegment moonL12 = new LineSegment(535, 607, 578, 500);
+            LineSegment moonL13 = new LineSegment(578, 500, 636, 615);
+            LineSegment moonL14 = new LineSegment(636, 615, 732, 615);
+            LineSegment moonL15 = new LineSegment(732, 615, 790, 524);
+            LineSegment moonL16 = new LineSegment(790, 524, 827, 524);
+            LineSegment moonL17 = new LineSegment(827, 524, 869, 426);
+            LineSegment moonL18 = new LineSegment(869, 426, 980, 307);
+            LineSegment moonL19 = new LineSegment(980, 307, 1025, 189);
+            LineSegment moonL20 = new LineSegment(1025, 189, 1059, 189);
+            LineSegment moonL21 = new LineSegment(1059, 189, 1166, 324);
+            LineSegment moonL22 = new LineSegment(1166, 324, 1271, 217);
+            LineSegment moonL23 = new LineSegment(1271, 217, 1387, 326);
+            LineSegment moonL24 = new LineSegment(1387, 326, 1498, 0);
+
+            moonLines.Add(moonL1);
+            moonLines.Add(moonL2);
+            moonLines.Add(moonL3);
+            moonLines.Add(moonL4);
+            moonLines.Add(moonL5);
+            moonLines.Add(moonL6);
+            moonLines.Add(moonL7);
+            moonLines.Add(moonL8);
+            moonLines.Add(moonL9);
+            moonLines.Add(moonL10);
+            moonLines.Add(moonL11);
+            moonLines.Add(moonL12);
+            moonLines.Add(moonL13);
+            moonLines.Add(moonL14);
+            moonLines.Add(moonL15);
+            moonLines.Add(moonL16);
+            moonLines.Add(moonL17);
+            moonLines.Add(moonL18);
+            moonLines.Add(moonL19);
+            moonLines.Add(moonL20);
+            moonLines.Add(moonL21);
+            moonLines.Add(moonL22);
+            moonLines.Add(moonL23);
+            moonLines.Add(moonL24);
         }
 
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -142,6 +192,24 @@ namespace Lunar_Lander
             lander.x = lander.x + lander.xSpeed;
             #endregion
 
+            foreach (LineSegment landerL in landerLines)
+            {
+                foreach(LineSegment moonL in moonLines)
+                {
+                    didIntersect = Intersection.LineSegementsIntersect(moonL, landerL, true);
+
+                    if (didIntersect == true)
+                    {
+                        
+                    }
+
+                    else
+                    {
+
+                    }
+                }
+            }
+
 
             Refresh();
         }
@@ -150,6 +218,33 @@ namespace Lunar_Lander
         {
             float x2 = Convert.ToSingle(lander.x);
             float y2 = Convert.ToSingle(lander.y);
+
+            //Draw Moon's Surface
+
+            e.Graphics.DrawLine(drawPen,0, 0, 39, 231);
+            e.Graphics.DrawLine(drawPen,39, 231, 140, 308);
+            e.Graphics.DrawLine(drawPen,140, 308, 203, 309);
+            e.Graphics.DrawLine(drawPen,203, 309, 256, 491);
+            e.Graphics.DrawLine(drawPen,256, 491, 306, 432);
+            e.Graphics.DrawLine(drawPen,306, 432, 333, 500);
+            e.Graphics.DrawLine(drawPen,333, 500, 371, 528);
+            e.Graphics.DrawLine(drawPen,371, 528, 388, 627);
+            e.Graphics.DrawLine(drawPen,388, 627, 473, 627);
+            e.Graphics.DrawLine(drawPen,473, 627, 506, 552);
+            e.Graphics.DrawLine(drawPen,506, 552, 535, 607);
+            e.Graphics.DrawLine(drawPen,535, 607, 578, 500);
+            e.Graphics.DrawLine(drawPen,578, 500, 636, 615);
+            e.Graphics.DrawLine(drawPen,636, 615, 732, 615);
+            e.Graphics.DrawLine(drawPen,732, 615, 790, 524);
+            e.Graphics.DrawLine(drawPen,790, 524, 827, 524);
+            e.Graphics.DrawLine(drawPen,827, 524, 869, 426);
+            e.Graphics.DrawLine(drawPen,869, 426, 980, 307);
+            e.Graphics.DrawLine(drawPen,980, 307, 1025, 189);
+            e.Graphics.DrawLine(drawPen,1025, 189, 1059, 189);
+            e.Graphics.DrawLine(drawPen,1059, 189, 1166, 324);
+            e.Graphics.DrawLine(drawPen,1166, 324, 1271, 217);
+            e.Graphics.DrawLine(drawPen,1271, 217, 1387, 326);
+            e.Graphics.DrawLine(drawPen,1387, 326, 1498, 0); 
 
             //find the centre of the hero to set the origin point where rotation will happen
             e.Graphics.TranslateTransform(lander.width / 2 + x2, lander.width / 2 + y2);
@@ -172,13 +267,6 @@ namespace Lunar_Lander
             e.Graphics.DrawString(lander.xSpeed + "xSpeed", drawFont, drawBrush, 500, 100);
             e.Graphics.DrawString(lander.y + "Y", drawFont, drawBrush, 200, 200);
             e.Graphics.DrawString(lander.ySpeed + "ySpeed", drawFont, drawBrush, 500, 200);
-
-            //Drawing World
-            e.Graphics.DrawImage(Properties.Resources.moonSurface, 0, 50);
-
-            
         }
-
-
     }
 }
