@@ -34,7 +34,7 @@ namespace Lunar_Lander
             Onstart();
 
             gameTimer.Enabled = true;
-            gameTimer.Start();
+            //gameTimer.Start();
         }
 
         public void Onstart()
@@ -48,20 +48,21 @@ namespace Lunar_Lander
             int angleLander = 90;
             int imageLander = 0;
             //Temp values for drawing test rectangle 
-            int widthLander = 90;
-            int heightLander = 90;
+            int widthLander = 45;
+            int heightLander = 45;
             int x2 = 0;
             int y2 = 0;
 
             lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, angleLander, angleSpeedLander, imageLander, widthLander, heightLander);
 
-            LineSegment landerL1 = new LineSegment(lander.height - 115, lander.width - 75, lander.height - 70, lander.width - 75);
-            LineSegment landerL2 = new LineSegment(lander.height - 115, lander.width - 113, lander.height - 70, lander.width - 113);
-            LineSegment landerL3 = new LineSegment(lander.height - 70, lander.width - 75, lander.height - 70, lander.width - 113);
+            LineSegment landerL1V2 = new LineSegment((int)lander.x, (int)lander.y, (int)lander.x, (int)lander.x + lander.height);
 
-            landerLines.Add(landerL1);
-            landerLines.Add(landerL2);
-            landerLines.Add(landerL3);
+            //   LineSegment landerL2 = new LineSegment(lander.height - 115, lander.width - 113, lander.height - 70, lander.width - 113);
+            //   LineSegment landerL3 = new LineSegment(lander.height - 70, lander.width - 75, lander.height - 70, lander.width - 113);
+
+            landerLines.Add(landerL1V2);
+            //    landerLines.Add(landerL2);
+            //    landerLines.Add(landerL3);
 
             LineSegment moonL1 = new LineSegment(0, 0, 39, 231);
             LineSegment moonL2 = new LineSegment(39, 231, 140, 308);
@@ -192,15 +193,25 @@ namespace Lunar_Lander
             lander.x = lander.x + lander.xSpeed;
             #endregion
 
-            foreach (LineSegment landerL in landerLines)
+            //update lander lines
+
+            landerLines[0].x1 = (int)lander.x;
+            landerLines[0].y1 = (int)lander.y;
+            landerLines[0].x2 = (int)lander.x;
+            landerLines[0].y2 = (int)lander.y + lander.height;
+            landerLines[0].pStart = new System.Windows.Point(landerLines[0].x1, landerLines[0].y1);
+            landerLines[0].pEnd = new System.Windows.Point(landerLines[0].x2, landerLines[0].y2);
+
+            foreach (LineSegment l in landerLines)
             {
-                foreach(LineSegment moonL in moonLines)
+                foreach(LineSegment m in moonLines)
                 {
-                    didIntersect = Intersection.LineSegementsIntersect(moonL, landerL, true);
+                    didIntersect = Intersection.LineSegementsIntersect(l, m, true);
 
                     if (didIntersect == true)
                     {
-                        
+                        gameTimer.Enabled = false;
+                        return;
                     }
 
                     else
@@ -216,35 +227,39 @@ namespace Lunar_Lander
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
+            e.Graphics.DrawEllipse(drawPen, 400, 400, 10, 10);
+
             float x2 = Convert.ToSingle(lander.x);
             float y2 = Convert.ToSingle(lander.y);
 
             //Draw Moon's Surface
 
-            e.Graphics.DrawLine(drawPen,0, 0, 39, 231);
-            e.Graphics.DrawLine(drawPen,39, 231, 140, 308);
-            e.Graphics.DrawLine(drawPen,140, 308, 203, 309);
-            e.Graphics.DrawLine(drawPen,203, 309, 256, 491);
-            e.Graphics.DrawLine(drawPen,256, 491, 306, 432);
-            e.Graphics.DrawLine(drawPen,306, 432, 333, 500);
-            e.Graphics.DrawLine(drawPen,333, 500, 371, 528);
-            e.Graphics.DrawLine(drawPen,371, 528, 388, 627);
-            e.Graphics.DrawLine(drawPen,388, 627, 473, 627);
-            e.Graphics.DrawLine(drawPen,473, 627, 506, 552);
-            e.Graphics.DrawLine(drawPen,506, 552, 535, 607);
-            e.Graphics.DrawLine(drawPen,535, 607, 578, 500);
-            e.Graphics.DrawLine(drawPen,578, 500, 636, 615);
-            e.Graphics.DrawLine(drawPen,636, 615, 732, 615);
-            e.Graphics.DrawLine(drawPen,732, 615, 790, 524);
-            e.Graphics.DrawLine(drawPen,790, 524, 827, 524);
-            e.Graphics.DrawLine(drawPen,827, 524, 869, 426);
-            e.Graphics.DrawLine(drawPen,869, 426, 980, 307);
-            e.Graphics.DrawLine(drawPen,980, 307, 1025, 189);
-            e.Graphics.DrawLine(drawPen,1025, 189, 1059, 189);
-            e.Graphics.DrawLine(drawPen,1059, 189, 1166, 324);
-            e.Graphics.DrawLine(drawPen,1166, 324, 1271, 217);
-            e.Graphics.DrawLine(drawPen,1271, 217, 1387, 326);
-            e.Graphics.DrawLine(drawPen,1387, 326, 1498, 0); 
+            e.Graphics.DrawLine(drawPen, 0, 0, 39, 231);
+            e.Graphics.DrawLine(drawPen, 39, 231, 140, 308);
+            e.Graphics.DrawLine(drawPen, 140, 308, 203, 309);
+            e.Graphics.DrawLine(drawPen, 203, 309, 256, 491);
+            e.Graphics.DrawLine(drawPen, 256, 491, 306, 432);
+            e.Graphics.DrawLine(drawPen, 306, 432, 333, 500);
+            e.Graphics.DrawLine(drawPen, 333, 500, 371, 528);
+            e.Graphics.DrawLine(drawPen, 371, 528, 388, 627);
+            e.Graphics.DrawLine(drawPen, 388, 627, 473, 627);
+            e.Graphics.DrawLine(drawPen, 473, 627, 506, 552);
+            e.Graphics.DrawLine(drawPen, 506, 552, 535, 607);
+            e.Graphics.DrawLine(drawPen, 535, 607, 578, 500);
+            e.Graphics.DrawLine(drawPen, 578, 500, 636, 615);
+            e.Graphics.DrawLine(drawPen, 636, 615, 732, 615);
+            e.Graphics.DrawLine(drawPen, 732, 615, 790, 524);
+            e.Graphics.DrawLine(drawPen, 790, 524, 827, 524);
+            e.Graphics.DrawLine(drawPen, 827, 524, 869, 426);
+            e.Graphics.DrawLine(drawPen, 869, 426, 980, 307);
+            e.Graphics.DrawLine(drawPen, 980, 307, 1025, 189);
+            e.Graphics.DrawLine(drawPen, 1025, 189, 1059, 189);
+            e.Graphics.DrawLine(drawPen, 1059, 189, 1166, 324);
+            e.Graphics.DrawLine(drawPen, 1166, 324, 1271, 217);
+            e.Graphics.DrawLine(drawPen, 1271, 217, 1387, 326);
+            e.Graphics.DrawLine(drawPen, 1387, 326, 1498, 0);
+
+
 
             //find the centre of the hero to set the origin point where rotation will happen
             e.Graphics.TranslateTransform(lander.width / 2 + x2, lander.width / 2 + y2);
@@ -253,11 +268,9 @@ namespace Lunar_Lander
             e.Graphics.RotateTransform(lander.angle);
 
             // draw the object in the middle of the rotated origin point
-            e.Graphics.DrawLine(drawPen, lander.height - 115, lander.width - 75, lander.height - 70, lander.width - 75);
-            e.Graphics.DrawLine(drawPen, lander.height - 115, lander.width - 113, lander.height - 70, lander.width - 113);
-            e.Graphics.DrawLine(drawPen, lander.height - 70, lander.width - 75, lander.height - 70, lander.width - 113);
+            e.Graphics.DrawLine(drawPen, landerLines[0].x1, landerLines[0].y1, landerLines[0].x2, landerLines[0].y2);
 
-            e.Graphics.DrawImage(Properties.Resources.landerEdit, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
+            e.Graphics.DrawImage(Properties.Resources.landerFinal2, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
             //reset to original origin point
             e.Graphics.ResetTransform();
 
