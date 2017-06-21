@@ -25,6 +25,9 @@ namespace Lunar_Lander
         public List<LineSegment> moonLines = new List<LineSegment>();
         public List<LineSegment> landerLines = new List<LineSegment>();
 
+        public string explode;
+
+
         Lander lander;
         Boolean didIntersect = false;
 
@@ -34,7 +37,7 @@ namespace Lunar_Lander
             Onstart();
 
             gameTimer.Enabled = true;
-            //gameTimer.Start();
+            gameTimer.Start();
         }
 
         public void Onstart()
@@ -52,17 +55,17 @@ namespace Lunar_Lander
             int heightLander = 45;
             int x2 = 0;
             int y2 = 0;
+            int fuel = 100;
 
-            lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, angleLander, angleSpeedLander, imageLander, widthLander, heightLander);
+            lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, angleLander, angleSpeedLander, imageLander, widthLander, heightLander, fuel);
 
-            LineSegment landerL1V2 = new LineSegment((int)lander.x, (int)lander.y, (int)lander.x, (int)lander.x + lander.height);
+            LineSegment landerL1 = new LineSegment((int)lander.x, (int)lander.y, (int)lander.x, (int)lander.y + lander.height);
+            LineSegment landerL2 = new LineSegment((int)lander.x + lander.width, (int)lander.y, (int)lander.x + lander.width, (int)lander.y + lander.height);
+            LineSegment landerL3 = new LineSegment((int)lander.x, (int)lander.y + lander.height, (int)lander.x + lander.width, (int)lander.y + lander.height);
 
-            //   LineSegment landerL2 = new LineSegment(lander.height - 115, lander.width - 113, lander.height - 70, lander.width - 113);
-            //   LineSegment landerL3 = new LineSegment(lander.height - 70, lander.width - 75, lander.height - 70, lander.width - 113);
-
-            landerLines.Add(landerL1V2);
-            //    landerLines.Add(landerL2);
-            //    landerLines.Add(landerL3);
+            landerLines.Add(landerL1);
+            landerLines.Add(landerL2);
+            landerLines.Add(landerL3);
 
             LineSegment moonL1 = new LineSegment(0, 0, 39, 231);
             LineSegment moonL2 = new LineSegment(39, 231, 140, 308);
@@ -177,7 +180,13 @@ namespace Lunar_Lander
 
             if (upArrowDown == true)
             {
-                lander.Boost("engage");
+                
+
+                if (lander.fuel  > 0)
+                {
+                    lander.Boost("engage");
+                    lander.fuel--;
+                }
 
                 if (lander.ySpeed > 2.7)
                 {
@@ -202,6 +211,20 @@ namespace Lunar_Lander
             landerLines[0].pStart = new System.Windows.Point(landerLines[0].x1, landerLines[0].y1);
             landerLines[0].pEnd = new System.Windows.Point(landerLines[0].x2, landerLines[0].y2);
 
+            landerLines[1].x1 = (int)lander.x + lander.width;
+            landerLines[1].y1 = (int)lander.y;
+            landerLines[1].x2 = (int)lander.x + lander.width;
+            landerLines[1].y2 = (int)lander.y + lander.height;
+            landerLines[1].pStart = new System.Windows.Point(landerLines[1].x1, landerLines[1].y1);
+            landerLines[1].pEnd = new System.Windows.Point(landerLines[1].x2, landerLines[1].y2);
+
+            landerLines[2].x1 = (int)lander.x;
+            landerLines[2].y1 = (int)lander.y + lander.height;
+            landerLines[2].x2 = (int)lander.x + lander.width;
+            landerLines[2].y2 = (int)lander.y + lander.height;
+            landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
+            landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
+
             foreach (LineSegment l in landerLines)
             {
                 foreach(LineSegment m in moonLines)
@@ -210,13 +233,13 @@ namespace Lunar_Lander
 
                     if (didIntersect == true)
                     {
+                        explode = "true";
                         gameTimer.Enabled = false;
-                        return;
                     }
 
                     else
                     {
-
+                        
                     }
                 }
             }
@@ -227,7 +250,6 @@ namespace Lunar_Lander
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawEllipse(drawPen, 400, 400, 10, 10);
 
             float x2 = Convert.ToSingle(lander.x);
             float y2 = Convert.ToSingle(lander.y);
@@ -259,18 +281,26 @@ namespace Lunar_Lander
             e.Graphics.DrawLine(drawPen, 1271, 217, 1387, 326);
             e.Graphics.DrawLine(drawPen, 1387, 326, 1498, 0);
 
-
+            //Hit box Lines
+            e.Graphics.DrawLine(drawPen, landerLines[0].x1, landerLines[0].y1, landerLines[0].x2, landerLines[0].y2);
+            e.Graphics.DrawLine(drawPen, landerLines[1].x1, landerLines[1].y1, landerLines[1].x2, landerLines[1].y2);
+            e.Graphics.DrawLine(drawPen, landerLines[2].x1, landerLines[2].y1, landerLines[2].x2, landerLines[2].y2);
 
             //find the centre of the hero to set the origin point where rotation will happen
             e.Graphics.TranslateTransform(lander.width / 2 + x2, lander.width / 2 + y2);
 
             //rotate by the given angle for the hero
             e.Graphics.RotateTransform(lander.angle);
+      
+            if (explode == "true")
+            {
+                e.Graphics.DrawImage(Properties.Resources.boomFinal, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
+            }
+            else
+            {
+                e.Graphics.DrawImage(Properties.Resources.landerFinal2, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
+            }
 
-            // draw the object in the middle of the rotated origin point
-            e.Graphics.DrawLine(drawPen, landerLines[0].x1, landerLines[0].y1, landerLines[0].x2, landerLines[0].y2);
-
-            e.Graphics.DrawImage(Properties.Resources.landerFinal2, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
             //reset to original origin point
             e.Graphics.ResetTransform();
 
@@ -280,6 +310,7 @@ namespace Lunar_Lander
             e.Graphics.DrawString(lander.xSpeed + "xSpeed", drawFont, drawBrush, 500, 100);
             e.Graphics.DrawString(lander.y + "Y", drawFont, drawBrush, 200, 200);
             e.Graphics.DrawString(lander.ySpeed + "ySpeed", drawFont, drawBrush, 500, 200);
+            e.Graphics.DrawString("Fuel:" + lander.fuel, drawFont, drawBrush, 500, 500);
         }
     }
 }

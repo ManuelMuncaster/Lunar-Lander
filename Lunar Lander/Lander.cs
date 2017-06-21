@@ -10,10 +10,11 @@ namespace Lunar_Lander
 {
     class Lander
     {
-        public int angle, angleSpeed, image, width, height;
+        public int angle, angleSpeed, image, width, height, fuel;
         public double x, y, xSpeed, ySpeed;
+        public string explode;
 
-        public Lander (double _x, double _y, double _xSpeed, double _ySpeed, int _angle, int _angleSpeed, int _image, int _width, int _height)
+        public Lander (double _x, double _y, double _xSpeed, double _ySpeed, int _angle, int _angleSpeed, int _image, int _width, int _height, int _fuel)
         {
             x = _x;
             y = _y;
@@ -24,6 +25,7 @@ namespace Lunar_Lander
             image = _image;
             width = _width;
             height = _height;
+            fuel = _fuel;
         }
 
         public void Turn (string direction)
@@ -46,10 +48,6 @@ namespace Lunar_Lander
             }
         }
 
-        public void Collide (Boolean didIntersect)
-        {
-
-        }
 
         public void Boost (string engage)
         {
