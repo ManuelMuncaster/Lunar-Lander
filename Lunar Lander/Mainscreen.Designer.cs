@@ -30,7 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.startLabel = new System.Windows.Forms.Label();
-            this.scoreLabel = new System.Windows.Forms.Label();
+            this.highScoreLabel = new System.Windows.Forms.Label();
             this.exitLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -54,15 +54,15 @@
             this.startLabel.TabIndex = 1;
             this.startLabel.Text = "Launch Mission";
             // 
-            // scoreLabel
+            // highScoreLabel
             // 
-            this.scoreLabel.AutoSize = true;
-            this.scoreLabel.ForeColor = System.Drawing.Color.White;
-            this.scoreLabel.Location = new System.Drawing.Point(212, 283);
-            this.scoreLabel.Name = "scoreLabel";
-            this.scoreLabel.Size = new System.Drawing.Size(60, 13);
-            this.scoreLabel.TabIndex = 2;
-            this.scoreLabel.Text = "Highscores";
+            this.highScoreLabel.AutoSize = true;
+            this.highScoreLabel.ForeColor = System.Drawing.Color.White;
+            this.highScoreLabel.Location = new System.Drawing.Point(212, 283);
+            this.highScoreLabel.Name = "highScoreLabel";
+            this.highScoreLabel.Size = new System.Drawing.Size(60, 13);
+            this.highScoreLabel.TabIndex = 2;
+            this.highScoreLabel.Text = "Highscores";
             // 
             // exitLabel
             // 
@@ -81,7 +81,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.exitLabel);
-            this.Controls.Add(this.scoreLabel);
+            this.Controls.Add(this.highScoreLabel);
             this.Controls.Add(this.startLabel);
             this.Controls.Add(this.label1);
             this.Name = "Mainscreen";
@@ -96,7 +96,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label startLabel;
-        private System.Windows.Forms.Label scoreLabel;
+        private System.Windows.Forms.Label highScoreLabel;
         private System.Windows.Forms.Label exitLabel;
     }
 }

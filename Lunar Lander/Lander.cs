@@ -54,7 +54,7 @@ namespace Lunar_Lander
 
             if (angle == 90 && ySpeed >= -5.7)
             {
-                ySpeed -= 0.25f;
+                ySpeed -= 0.10f;
             }
 
            if (angle == 0 && xSpeed <= 4.9)
@@ -80,85 +80,85 @@ namespace Lunar_Lander
             if (angle >= 20 && angle <= 30)
             {
                 xSpeed -= 0.04f;
-                ySpeed -= 0.05;
+                ySpeed -= 0.01;
             }
 
             if (angle >= 30 && angle <= 40)
             {
                 xSpeed -= 0.04f;
-                ySpeed -= 0.10;
+                ySpeed -= 0.01;
             }
 
             if (angle >= 40 && angle <= 50)
             {
                 xSpeed -= 0.02f;
-                ySpeed -= 0.15;
+                ySpeed -= 0.05;
             }
 
             if (angle >= 50 && angle <= 60)
             {
                 xSpeed -= 0.02f;
-                ySpeed -= 0.15;
+                ySpeed -= 0.06;
             }
 
             if (angle >= 60 && angle <= 70)
             {
                 xSpeed -= 0.02f;
-                ySpeed -= 0.20;
+                ySpeed -= 0.07;
             }
 
             if (angle >= 70 && angle <= 80)
             {
                 xSpeed -= 0.01f;
-                ySpeed -= 0.20;
+                ySpeed -= 0.08;
             }
 
             if (angle >= 80 && angle <= 89)
             {
                 xSpeed -= 0.01f;
-                ySpeed -= 0.25;
+                ySpeed -= 0.09;
             }
 
             if (angle >= 91 && angle <= 100)
             {
                 xSpeed += 0.01f;
-                ySpeed -= 0.25;
+                ySpeed -= 0.09;
             }
 
             if (angle >= 100 && angle <= 110)
             {
                 xSpeed += 0.01f;
-                ySpeed -= 0.20;
+                ySpeed -= 0.08;
             }
 
             if (angle >= 110 && angle <= 120)
             {
                 xSpeed += 0.01f;
-                ySpeed -= 0.20;
+                ySpeed -= 0.07;
             }
 
             if (angle >= 120 && angle <= 130)
             {
                 xSpeed += 0.02f;
-                ySpeed -= 0.15;
+                ySpeed -= 0.06;
             }
 
             if (angle >= 130 && angle <= 140)
             {
                 xSpeed += 0.02f;
-                ySpeed -= 0.15;
+                ySpeed -= 0.05;
             }
 
             if (angle >= 140 && angle <= 150)
             {
                 xSpeed += 0.04f;
-                ySpeed -= 0.10;
+                ySpeed -= 0.01;
             }
 
             if (angle >= 150 && angle <= 160)
             {
                 xSpeed += 0.04f;
-                ySpeed -= 0.05;
+                ySpeed -= 0.01;
             }
 
             if (angle >= 160 && angle <= 170)

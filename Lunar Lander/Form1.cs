@@ -20,12 +20,12 @@ namespace Lunar_Lander
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            GameScreen gs = new GameScreen();
-            this.Controls.Add(gs);
+            Mainscreen ms = new Mainscreen();
+            this.Controls.Add(ms);
 
             this.Controls.Remove(this);
 
-            gs.Location = new Point((this.Width - gs.Width) / 2, (this.Height - gs.Height) / 2);
+            ms.Location = new Point((this.Width - ms.Width) / 2, (this.Height - ms.Height) / 2);
         }
     }
 }

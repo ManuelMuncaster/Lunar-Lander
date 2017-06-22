@@ -33,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lines %281%29">
-      <HintPath>..\..\..\..\..\Desktop\Manuel's Files\Lunar Lander Resources\Lines (1).dll</HintPath>
+    <Reference Include="Lines">
+      <HintPath>E:\Downloads\Lines.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

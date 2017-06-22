@@ -18,132 +18,96 @@ namespace Lunar_Lander
         public Mainscreen()
         {
             InitializeComponent();
-            Onstart();
-        }
-
-        public void Onstart()
-        {
-
         }
 
         private void Mainscreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-        //    lastIndex = index;
+            lastIndex = index;
+            Form form = this.FindForm();
 
-        //    switch (e.KeyCode)
-        //    {
-        //        case Keys.Up:
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
 
-        //            if (index != 0)
-        //                index--;
-        //            else
-        //            {
-        //                index = 3;
-        //            }
-        //            break;
-        //        case Keys.Down:
+                    if (index != 0)
+                        index--;
+                    else
+                    {
+                        index = 2;
+                    }
+                    break;
+                case Keys.Down:
 
-        //            if (index != 3)
-        //                index++;
-        //            else
-        //            {
-        //                index = 0;
-        //            }
-        //            break;
+                    if (index != 2)
+                        index++;
+                    else
+                    {
+                        index = 0;
+                    }
+                    break;
 
-        //        //clicking on the screen with space key
-        //        case Keys.Space:
-        //            switch (index)
-        //            {
-        //                //start button
-        //                case 0:
+                //clicking on the screen with space key
+                case Keys.Space:
+                    switch (index)
+                    {
+                        //start button
+                        case 0:
 
-        //                    InstructionScreen si = new InstructionScreen();
-        //                    si.Location = new Point((form.Width - si.Width) / 2, (form.Height - si.Height) / 2);
+                            GameScreen gs = new GameScreen();
+                            gs.Location = new Point((form.Width - gs.Width) / 2, (form.Height - gs.Height) / 2);
 
-        //                    form.Controls.Add(si);
-        //                    form.Controls.Remove(this);
+                            form.Controls.Add(gs);
+                            form.Controls.Remove(this);
 
-        //                    break;
+                            break;
 
-        //                //highscore button
-        //                case 1:
+                            //highscore button
+                        case 1:
 
-        //                    //play sound
-        //                    Form1.select.Stop();
-        //                    Form1.select.Play();
+                            //    HighscoreScreen hs = new HighscoreScreen();
+                            //    form.Controls.Add(hs);
+                            //    form.Controls.Remove(this);
 
-        //                    HighscoreScreen hs = new HighscoreScreen();
-        //                    form.Controls.Add(hs);
-        //                    form.Controls.Remove(this);
+                            //    hs.Location = new Point((form.Width - hs.Width) / 2, (form.Height - hs.Height) / 2);
 
-        //                    hs.Location = new Point((form.Width - hs.Width) / 2, (form.Height - hs.Height) / 2);
+                            break;
 
-        //                    break;
+                        //exit button
+                        case 2:
 
-        //                //option button
-        //                case 2:
+                            Application.Exit();
+                            break;
+                    }
+                    break;
+            }
 
-        //                    //play sound
-        //                    Form1.select.Stop();
-        //                    Form1.select.Play();
+            //set button to white if not clicked on
+            switch (lastIndex)
+            {
+                case 0:
+                    startLabel.ForeColor = Color.White;
+                    break;
+                case 1:
+                    highScoreLabel.ForeColor = Color.White;
+                    break;
+                case 2:
+                    exitLabel.ForeColor = Color.White;
+                    break;
+            }
 
-        //                    OptionScreen os = new OptionScreen();
-
-        //                    form.Controls.Add(os);
-        //                    form.Controls.Remove(this);
-
-        //                    os.Location = new Point((form.Width - os.Width) / 2, (form.Height - os.Height) / 2);
-        //                    break;
-
-        //                //exit button
-        //                case 3:
-
-        //                    //play sound
-        //                    Form1.gameOver.Stop();
-        //                    Form1.gameOver.Play();
-        //                    Thread.Sleep(1000);
-
-        //                    Application.Exit();
-        //                    break;
-        //            }
-        //            break;
-        //    }
-
-            ////set button to white if not clicked on
-            //switch (lastIndex)
-            //{
-            //    case 0:
-            //        startLabel.ForeColor = Color.White;
-            //        break;
-            //    case 1:
-            //        highScoreLabel.ForeColor = Color.White;
-            //        break;
-            //    case 2:
-            //        optionLabel.ForeColor = Color.White;
-            //        break;
-            //    case 3:
-            //        exitLabel.ForeColor = Color.White;
-            //        break;
-            //}
-
-    //        //set selected button to red
-    //        switch (index)
-    //        {
-    //            case 0:
-    //                startLabel.ForeColor = Color.Red;
-    //                break;
-    //            case 1:
-    //                highScoreLabel.ForeColor = Color.Red;
-    //                break;
-    //            case 2:
-    //                optionLabel.ForeColor = Color.Red;
-    //                break;
-    //            case 3:
-    //                exitLabel.ForeColor = Color.Red;
-    //                break;
-    //        }
-    //    }
+            //set selected button to red
+            switch (index)
+            {
+                case 0:
+                    startLabel.ForeColor = Color.Red;
+                    break;
+                case 1:
+                    highScoreLabel.ForeColor = Color.Red;
+                    break;
+                case 2:
+                    exitLabel.ForeColor = Color.Red;
+                    break;
+            }
+        }
     }
     }
-}
