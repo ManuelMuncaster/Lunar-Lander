@@ -20,7 +20,7 @@ namespace Lunar_Lander
 
         //creating graphic objects
         SolidBrush drawBrush = new SolidBrush(Color.White);
-        Font drawFont = new Font("Courier", 16, FontStyle.Bold);
+        Font drawFont = new Font("8bit Wonder", 10, FontStyle.Bold);
         Pen drawPen = new Pen(Color.White);
         Pen redPen = new Pen(Color.Red);
 
@@ -31,7 +31,7 @@ namespace Lunar_Lander
 
         public string explode, win;
         public double roundedX, roundedY;
-        public int fuelLost;
+        public int fuelLost, crashed;
 
         Random fuelGen = new Random();
 
@@ -186,7 +186,6 @@ namespace Lunar_Lander
             if (upArrowDown == true)
             {
                 
-
                 if (lander.fuel  > 0)
                 {
                     lander.Boost("engage");
@@ -198,6 +197,17 @@ namespace Lunar_Lander
                     lander.ySpeed -= 0.5f;
                 }
                
+            }
+
+            if (crashed == 1)
+            {
+                Form form = this.FindForm();
+
+                GameoverScreen gos = new GameoverScreen();
+                gos.Location = new Point((form.Width - gos.Width) / 2, (form.Height - gos.Height) / 2);
+
+                form.Controls.Add(gos);
+                form.Controls.Remove(this);
             }
 
             #region Gravity
@@ -238,11 +248,47 @@ namespace Lunar_Lander
 
                     if (didIntersect == true)
                     {
-                        explode = "true";
                         fuelLost = fuelGen.Next(300, 400);
                         lander.fuel = lander.fuel - fuelLost;
-                        gameTimer.Enabled = false;
+                        gameTimer.Stop();
+                        explode = "true";
+                        gameTimer.Start();
+                        this.Refresh();
+                        lander.x = 400;
+                        lander.y = 100;
+                        lander.angle = 90;
+                        lander.ySpeed = 0.5;
 
+                        landerLines[0].x1 = (int)lander.x;
+                        landerLines[0].y1 = (int)lander.y;
+                        landerLines[0].x2 = (int)lander.x;
+                        landerLines[0].y2 = (int)lander.y + lander.height;
+                        landerLines[0].pStart = new System.Windows.Point(landerLines[0].x1, landerLines[0].y1);
+                        landerLines[0].pEnd = new System.Windows.Point(landerLines[0].x2, landerLines[0].y2);
+
+                        landerLines[1].x1 = (int)lander.x + lander.width;
+                        landerLines[1].y1 = (int)lander.y;
+                        landerLines[1].x2 = (int)lander.x + lander.width;
+                        landerLines[1].y2 = (int)lander.y + lander.height;
+                        landerLines[1].pStart = new System.Windows.Point(landerLines[1].x1, landerLines[1].y1);
+                        landerLines[1].pEnd = new System.Windows.Point(landerLines[1].x2, landerLines[1].y2);
+
+                        landerLines[2].x1 = (int)lander.x;
+                        landerLines[2].y1 = (int)lander.y + lander.height;
+                        landerLines[2].x2 = (int)lander.x + lander.width;
+                        landerLines[2].y2 = (int)lander.y + lander.height;
+                        landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
+                        landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
+
+                        Thread.Sleep(2500);
+                        fuelLost = 0;
+
+                        if (lander.fuel <= 1)
+                        {
+                            crashed = 1;
+                        }
+
+                        explode = "false";
                     }
 
                     else
@@ -262,28 +308,102 @@ namespace Lunar_Lander
                     {
                         if (lander.angle != 90)
                         {
-                            explode = "true";
                             fuelLost = fuelGen.Next(300, 400);
                             lander.fuel = lander.fuel - fuelLost;
-                            gameTimer.Enabled = false;
+                            gameTimer.Stop();
+                            explode = "true";
+                            gameTimer.Start();
+                            this.Refresh();
+                            lander.x = 400;
+                            lander.y = 100;
+                            lander.angle = 90;
+                            lander.ySpeed = 0.5;
+
+                            landerLines[0].x1 = (int)lander.x;
+                            landerLines[0].y1 = (int)lander.y;
+                            landerLines[0].x2 = (int)lander.x;
+                            landerLines[0].y2 = (int)lander.y + lander.height;
+                            landerLines[0].pStart = new System.Windows.Point(landerLines[0].x1, landerLines[0].y1);
+                            landerLines[0].pEnd = new System.Windows.Point(landerLines[0].x2, landerLines[0].y2);
+
+                            landerLines[1].x1 = (int)lander.x + lander.width;
+                            landerLines[1].y1 = (int)lander.y;
+                            landerLines[1].x2 = (int)lander.x + lander.width;
+                            landerLines[1].y2 = (int)lander.y + lander.height;
+                            landerLines[1].pStart = new System.Windows.Point(landerLines[1].x1, landerLines[1].y1);
+                            landerLines[1].pEnd = new System.Windows.Point(landerLines[1].x2, landerLines[1].y2);
+
+                            landerLines[2].x1 = (int)lander.x;
+                            landerLines[2].y1 = (int)lander.y + lander.height;
+                            landerLines[2].x2 = (int)lander.x + lander.width;
+                            landerLines[2].y2 = (int)lander.y + lander.height;
+                            landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
+                            landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
+
+                            Thread.Sleep(2500);
+                            fuelLost = 0;
+
+                            if (lander.fuel <= 1)
+                            {
+                                crashed = 1;
+                            }
+
+                            explode = "false";
                         }
 
                         else
                         {
-                            gameTimer.Enabled = false;
+                            gameTimer.Stop();
                         }
 
                         if (lander.ySpeed > 1.5)
                         {
-                            explode = "true";
                             fuelLost = fuelGen.Next(300, 400);
                             lander.fuel = lander.fuel - fuelLost;
-                            gameTimer.Enabled = false;
+                            gameTimer.Stop();
+                            explode = "true";
+                            gameTimer.Start();
+                            this.Refresh();
+                            lander.x = 400;
+                            lander.y = 100;
+                            lander.angle = 90;
+                            lander.ySpeed = 0.5;
+
+                            landerLines[0].x1 = (int)lander.x;
+                            landerLines[0].y1 = (int)lander.y;
+                            landerLines[0].x2 = (int)lander.x;
+                            landerLines[0].y2 = (int)lander.y + lander.height;
+                            landerLines[0].pStart = new System.Windows.Point(landerLines[0].x1, landerLines[0].y1);
+                            landerLines[0].pEnd = new System.Windows.Point(landerLines[0].x2, landerLines[0].y2);
+
+                            landerLines[1].x1 = (int)lander.x + lander.width;
+                            landerLines[1].y1 = (int)lander.y;
+                            landerLines[1].x2 = (int)lander.x + lander.width;
+                            landerLines[1].y2 = (int)lander.y + lander.height;
+                            landerLines[1].pStart = new System.Windows.Point(landerLines[1].x1, landerLines[1].y1);
+                            landerLines[1].pEnd = new System.Windows.Point(landerLines[1].x2, landerLines[1].y2);
+
+                            landerLines[2].x1 = (int)lander.x;
+                            landerLines[2].y1 = (int)lander.y + lander.height;
+                            landerLines[2].x2 = (int)lander.x + lander.width;
+                            landerLines[2].y2 = (int)lander.y + lander.height;
+                            landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
+                            landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
+
+                            Thread.Sleep(2500);
+                            fuelLost = 0;
+
+                            if (lander.fuel <= 1)
+                            {
+                                crashed = 1;
+                            }
+
+                            explode = "false";
                         }
 
                         else
                         {
-                            gameTimer.Enabled = false;
+                            gameTimer.Stop();
                         }
 
                     }
