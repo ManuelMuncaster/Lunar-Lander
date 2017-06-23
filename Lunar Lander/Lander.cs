@@ -28,6 +28,7 @@ namespace Lunar_Lander
             fuel = _fuel;
         }
 
+        //Determining direction based on key presses
         public void Turn (string direction)
         {
             if (direction == "left")
@@ -48,7 +49,7 @@ namespace Lunar_Lander
             }
         }
 
-
+        //The calculations for the lander's movements
         public void Boost (string engage)
         {
 

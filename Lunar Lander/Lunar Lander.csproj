@@ -75,6 +75,18 @@
     <Compile Include="Mainscreen.Designer.cs">
       <DependentUpon>Mainscreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="ManualScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ManualScreen.Designer.cs">
+      <DependentUpon>ManualScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="pauseScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pauseScreen.Designer.cs">
+      <DependentUpon>pauseScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -88,6 +100,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Mainscreen.resx">
       <DependentUpon>Mainscreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManualScreen.resx">
+      <DependentUpon>ManualScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pauseScreen.resx">
+      <DependentUpon>pauseScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -135,6 +153,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\boomFinal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blue_250x250.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\red_250x250.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arcade_yellow_half.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blackButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -10,21 +10,27 @@ using System.Windows.Forms;
 
 namespace Lunar_Lander
 {
-    public partial class GameoverScreen : UserControl
+    public partial class ManualScreen : UserControl
     {
-        int index = 0;
-        SolidBrush drawBrush = new SolidBrush(Color.White);
-        Font drawFont = new Font("8bit Wonder", 25, FontStyle.Bold);
-
-        public GameoverScreen()
+        public ManualScreen()
         {
             InitializeComponent();
-
         }
 
-        private void GameoverScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void ManualScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
+            {
+                Form form = this.FindForm();
+
+                GameScreen gs = new GameScreen();
+                gs.Location = new Point((form.Width - gs.Width) / 2, (form.Height - gs.Height) / 2);
+
+                form.Controls.Add(gs);
+                form.Controls.Remove(this);
+            }
+
+            if (e.KeyCode == Keys.Escape)
             {
                 Form form = this.FindForm();
 
@@ -34,13 +40,6 @@ namespace Lunar_Lander
                 form.Controls.Add(ms);
                 form.Controls.Remove(this);
             }
-
-        }
-
-        private void GameoverScreen_Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.DrawString("You Scored: " + GameScreen.score, drawFont, drawBrush, 550, 300);
         }
     }
-
 }

@@ -53,10 +53,10 @@ namespace Lunar_Lander
                         //start button
                         case 0:
 
-                            GameScreen gs = new GameScreen();
-                            gs.Location = new Point((form.Width - gs.Width) / 2, (form.Height - gs.Height) / 2);
+                            ManualScreen mas = new ManualScreen();
+                            mas.Location = new Point((form.Width - mas.Width) / 2, (form.Height - mas.Height) / 2);
 
-                            form.Controls.Add(gs);
+                            form.Controls.Add(mas);
                             form.Controls.Remove(this);
 
                             break;
@@ -80,7 +80,6 @@ namespace Lunar_Lander
                     }
                     break;
             }
-
             //set button to white if not clicked on
             switch (lastIndex)
             {

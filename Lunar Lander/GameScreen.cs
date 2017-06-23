@@ -1,4 +1,7 @@
-﻿using System;
+﻿//By: Manuel Muncaster
+//Purpose: Final Project
+//Date: May 24, 2017
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -16,7 +19,7 @@ namespace Lunar_Lander
     public partial class GameScreen : UserControl
     {
         //Bool values for key presses
-        Boolean leftArrowDown, rightArrowDown, downArrowDown, upArrowDown, escapeDown;
+        Boolean leftArrowDown, rightArrowDown, downArrowDown, upArrowDown, escapeDown, spaceDown;
 
         //creating graphic objects
         SolidBrush drawBrush = new SolidBrush(Color.White);
@@ -24,16 +27,17 @@ namespace Lunar_Lander
         Pen drawPen = new Pen(Color.White);
         Pen redPen = new Pen(Color.Red);
 
+        //creating lists
         public List<LineSegment> moonLines = new List<LineSegment>();
         public List<LineSegment> landerLines = new List<LineSegment>();
-        //public List<Rectangle> landingAreas = new List<Rectangle>();
         public List<LineSegment> landingAreas = new List<LineSegment>();
 
         public string explode, win;
         public double roundedX, roundedY;
-        public int fuelLost, crashed;
+        static public int fuelLost, crashed, score, scoreAdd;
 
         Random fuelGen = new Random();
+        Random scoreGen = new Random();
 
 
         Lander lander;
@@ -50,6 +54,7 @@ namespace Lunar_Lander
 
         public void Onstart()
         {
+            //Setting up ints and Collision Lines
             int xLander = 400;
             int yLander = 100;
             int xSpeedLander = 1;
@@ -63,7 +68,7 @@ namespace Lunar_Lander
 
             lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, angleLander, angleSpeedLander, imageLander, widthLander, heightLander, fuel);
 
-           
+            #region Collision Lines
             LineSegment landerL1 = new LineSegment((int)lander.x, (int)lander.y, (int)lander.x, (int)lander.y + lander.height);
             LineSegment landerL2 = new LineSegment((int)lander.x + lander.width, (int)lander.y, (int)lander.x + lander.width, (int)lander.y + lander.height);
             LineSegment landerL3 = new LineSegment((int)lander.x, (int)lander.y + lander.height, (int)lander.x + lander.width, (int)lander.y + lander.height);
@@ -121,6 +126,7 @@ namespace Lunar_Lander
             moonLines.Add(moonL16); 
             moonLines.Add(moonL17);
             moonLines.Add(moonL18);
+            #endregion
         }
 
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -141,6 +147,10 @@ namespace Lunar_Lander
                     break;
                 case Keys.Escape:
                     escapeDown = true;
+                    pause();
+                    break;
+                case Keys.Space:
+                    spaceDown = true;
                     break;
                 default:
                     break;
@@ -164,13 +174,42 @@ namespace Lunar_Lander
                     upArrowDown = false;
                     break;
                 case Keys.Space:
+                    spaceDown = false;
+                    break;
+                case Keys.Escape:
                     escapeDown = false;
                     break;
+
                 default:
                     break;
             }
         }
 
+        public void pause()
+        {   //Code for pause screen
+            gameTimer.Enabled = false;
+
+            DialogResult result = pauseScreen.Show("Quit The Game?", "Yes", "No");
+
+            switch (result)
+            {
+                case DialogResult.No:
+                    gameTimer.Enabled = true;
+                    escapeDown = false;
+                    leftArrowDown = false;
+                    rightArrowDown = false;
+                    break;
+
+                case DialogResult.Yes:
+                    Mainscreen ms = new Mainscreen();
+                    Form form = this.FindForm();
+                    form.Controls.Add(ms);
+                    form.Controls.Remove(this);
+
+                    ms.Location = new Point((form.Width - ms.Width) / 2, (form.Height - ms.Height) / 2);
+                    break;
+            }
+        }
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             if (leftArrowDown == true)
@@ -185,7 +224,6 @@ namespace Lunar_Lander
 
             if (upArrowDown == true)
             {
-                
                 if (lander.fuel  > 0)
                 {
                     lander.Boost("engage");
@@ -196,18 +234,43 @@ namespace Lunar_Lander
                 {
                     lander.ySpeed -= 0.5f;
                 }
-               
             }
 
+            //Determines if you have crashed without any fuel left
             if (crashed == 1)
             {
                 Form form = this.FindForm();
 
-                GameoverScreen gos = new GameoverScreen();
-                gos.Location = new Point((form.Width - gos.Width) / 2, (form.Height - gos.Height) / 2);
+                if (form !=null)
+                {
+                    GameoverScreen gos = new GameoverScreen();
+                    gos.Location = new Point((form.Width - gos.Width) / 2, (form.Height - gos.Height) / 2);
+                    form.Controls.Add(gos);
+                    form.Controls.Remove(this);
+                    crashed = 0;
+                    #region Updating Hitbox Position
+                    landerLines[0].x1 = (int)lander.x;
+                    landerLines[0].y1 = (int)lander.y;
+                    landerLines[0].x2 = (int)lander.x;
+                    landerLines[0].y2 = (int)lander.y + lander.height;
+                    landerLines[0].pStart = new System.Windows.Point(landerLines[0].x1, landerLines[0].y1);
+                    landerLines[0].pEnd = new System.Windows.Point(landerLines[0].x2, landerLines[0].y2);
 
-                form.Controls.Add(gos);
-                form.Controls.Remove(this);
+                    landerLines[1].x1 = (int)lander.x + lander.width;
+                    landerLines[1].y1 = (int)lander.y;
+                    landerLines[1].x2 = (int)lander.x + lander.width;
+                    landerLines[1].y2 = (int)lander.y + lander.height;
+                    landerLines[1].pStart = new System.Windows.Point(landerLines[1].x1, landerLines[1].y1);
+                    landerLines[1].pEnd = new System.Windows.Point(landerLines[1].x2, landerLines[1].y2);
+
+                    landerLines[2].x1 = (int)lander.x;
+                    landerLines[2].y1 = (int)lander.y + lander.height;
+                    landerLines[2].x2 = (int)lander.x + lander.width;
+                    landerLines[2].y2 = (int)lander.y + lander.height;
+                    landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
+                    landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
+#endregion
+                }
             }
 
             #region Gravity
@@ -240,6 +303,7 @@ namespace Lunar_Lander
             landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
             landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
 
+            //Checking hitbox of lander against the moon for intersections
             foreach (LineSegment l in landerLines)
             {
                 foreach(LineSegment m in moonLines)
@@ -258,7 +322,7 @@ namespace Lunar_Lander
                         lander.y = 100;
                         lander.angle = 90;
                         lander.ySpeed = 0.5;
-
+                        #region Updating Postions
                         landerLines[0].x1 = (int)lander.x;
                         landerLines[0].y1 = (int)lander.y;
                         landerLines[0].x2 = (int)lander.x;
@@ -279,6 +343,7 @@ namespace Lunar_Lander
                         landerLines[2].y2 = (int)lander.y + lander.height;
                         landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
                         landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
+                        #endregion
 
                         Thread.Sleep(2500);
                         fuelLost = 0;
@@ -287,17 +352,16 @@ namespace Lunar_Lander
                         {
                             crashed = 1;
                         }
-
                         explode = "false";
                     }
-
                     else
                     {
-                        
+                        //Do nothing
                     }
                 }
             }
 
+            //Comparing hitbox against landing areas and determining if the lander has crashed or landed depending on the parameters set
             foreach (LineSegment l in landerLines)
             {
                 foreach (LineSegment m in landingAreas)
@@ -306,56 +370,6 @@ namespace Lunar_Lander
 
                     if (didIntersect == true)
                     {
-                        if (lander.angle != 90)
-                        {
-                            fuelLost = fuelGen.Next(300, 400);
-                            lander.fuel = lander.fuel - fuelLost;
-                            gameTimer.Stop();
-                            explode = "true";
-                            gameTimer.Start();
-                            this.Refresh();
-                            lander.x = 400;
-                            lander.y = 100;
-                            lander.angle = 90;
-                            lander.ySpeed = 0.5;
-
-                            landerLines[0].x1 = (int)lander.x;
-                            landerLines[0].y1 = (int)lander.y;
-                            landerLines[0].x2 = (int)lander.x;
-                            landerLines[0].y2 = (int)lander.y + lander.height;
-                            landerLines[0].pStart = new System.Windows.Point(landerLines[0].x1, landerLines[0].y1);
-                            landerLines[0].pEnd = new System.Windows.Point(landerLines[0].x2, landerLines[0].y2);
-
-                            landerLines[1].x1 = (int)lander.x + lander.width;
-                            landerLines[1].y1 = (int)lander.y;
-                            landerLines[1].x2 = (int)lander.x + lander.width;
-                            landerLines[1].y2 = (int)lander.y + lander.height;
-                            landerLines[1].pStart = new System.Windows.Point(landerLines[1].x1, landerLines[1].y1);
-                            landerLines[1].pEnd = new System.Windows.Point(landerLines[1].x2, landerLines[1].y2);
-
-                            landerLines[2].x1 = (int)lander.x;
-                            landerLines[2].y1 = (int)lander.y + lander.height;
-                            landerLines[2].x2 = (int)lander.x + lander.width;
-                            landerLines[2].y2 = (int)lander.y + lander.height;
-                            landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
-                            landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
-
-                            Thread.Sleep(2500);
-                            fuelLost = 0;
-
-                            if (lander.fuel <= 1)
-                            {
-                                crashed = 1;
-                            }
-
-                            explode = "false";
-                        }
-
-                        else
-                        {
-                            gameTimer.Stop();
-                        }
-
                         if (lander.ySpeed > 1.5)
                         {
                             fuelLost = fuelGen.Next(300, 400);
@@ -368,6 +382,7 @@ namespace Lunar_Lander
                             lander.y = 100;
                             lander.angle = 90;
                             lander.ySpeed = 0.5;
+                            lander.xSpeed = 0.05;
 
                             landerLines[0].x1 = (int)lander.x;
                             landerLines[0].y1 = (int)lander.y;
@@ -401,61 +416,167 @@ namespace Lunar_Lander
                             explode = "false";
                         }
 
-                        else
+                        else if (lander.y < 1.5)
                         {
+                            scoreAdd = scoreGen.Next(50, 100);
+                            score = score + scoreAdd;
                             gameTimer.Stop();
+                            win = "true";
+                            gameTimer.Start();
+                            this.Refresh();
+                            lander.x = 400;
+                            lander.y = 100;
+                            lander.angle = 90;
+
+                            landerLines[0].x1 = (int)lander.x;
+                            landerLines[0].y1 = (int)lander.y;
+                            landerLines[0].x2 = (int)lander.x;
+                            landerLines[0].y2 = (int)lander.y + lander.height;
+                            landerLines[0].pStart = new System.Windows.Point(landerLines[0].x1, landerLines[0].y1);
+                            landerLines[0].pEnd = new System.Windows.Point(landerLines[0].x2, landerLines[0].y2);
+
+                            landerLines[1].x1 = (int)lander.x + lander.width;
+                            landerLines[1].y1 = (int)lander.y;
+                            landerLines[1].x2 = (int)lander.x + lander.width;
+                            landerLines[1].y2 = (int)lander.y + lander.height;
+                            landerLines[1].pStart = new System.Windows.Point(landerLines[1].x1, landerLines[1].y1);
+                            landerLines[1].pEnd = new System.Windows.Point(landerLines[1].x2, landerLines[1].y2);
+
+                            landerLines[2].x1 = (int)lander.x;
+                            landerLines[2].y1 = (int)lander.y + lander.height;
+                            landerLines[2].x2 = (int)lander.x + lander.width;
+                            landerLines[2].y2 = (int)lander.y + lander.height;
+                            landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
+                            landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
+
+                            Thread.Sleep(2500);
+                            win = "false";
                         }
 
-                    }
+                        else if (lander.angle != 90)
+                        {
+                            fuelLost = fuelGen.Next(300, 400);
+                            lander.fuel = lander.fuel - fuelLost;
+                            gameTimer.Stop();
+                            explode = "true";
+                            gameTimer.Start();
+                            this.Refresh();
+                            lander.x = 400;
+                            lander.y = 100;
+                            lander.angle = 90;
 
+                            landerLines[0].x1 = (int)lander.x;
+                            landerLines[0].y1 = (int)lander.y;
+                            landerLines[0].x2 = (int)lander.x;
+                            landerLines[0].y2 = (int)lander.y + lander.height;
+                            landerLines[0].pStart = new System.Windows.Point(landerLines[0].x1, landerLines[0].y1);
+                            landerLines[0].pEnd = new System.Windows.Point(landerLines[0].x2, landerLines[0].y2);
+
+                            landerLines[1].x1 = (int)lander.x + lander.width;
+                            landerLines[1].y1 = (int)lander.y;
+                            landerLines[1].x2 = (int)lander.x + lander.width;
+                            landerLines[1].y2 = (int)lander.y + lander.height;
+                            landerLines[1].pStart = new System.Windows.Point(landerLines[1].x1, landerLines[1].y1);
+                            landerLines[1].pEnd = new System.Windows.Point(landerLines[1].x2, landerLines[1].y2);
+
+                            landerLines[2].x1 = (int)lander.x;
+                            landerLines[2].y1 = (int)lander.y + lander.height;
+                            landerLines[2].x2 = (int)lander.x + lander.width;
+                            landerLines[2].y2 = (int)lander.y + lander.height;
+                            landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
+                            landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
+
+                            Thread.Sleep(2500);
+                            fuelLost = 0;
+
+                            if (lander.fuel <= 1)
+                            {
+                                crashed = 1;
+                            }
+
+                            explode = "false";
+                        }
+
+                        else if (lander.angle == 90)
+                        {
+                            scoreAdd = scoreGen.Next(50, 100);
+                            score = score + scoreAdd;
+                            gameTimer.Stop();
+                            win = "true";
+                            gameTimer.Start();
+                            this.Refresh();
+                            lander.x = 400;
+                            lander.y = 100;
+                            lander.angle = 90;
+
+                            landerLines[0].x1 = (int)lander.x;
+                            landerLines[0].y1 = (int)lander.y;
+                            landerLines[0].x2 = (int)lander.x;
+                            landerLines[0].y2 = (int)lander.y + lander.height;
+                            landerLines[0].pStart = new System.Windows.Point(landerLines[0].x1, landerLines[0].y1);
+                            landerLines[0].pEnd = new System.Windows.Point(landerLines[0].x2, landerLines[0].y2);
+
+                            landerLines[1].x1 = (int)lander.x + lander.width;
+                            landerLines[1].y1 = (int)lander.y;
+                            landerLines[1].x2 = (int)lander.x + lander.width;
+                            landerLines[1].y2 = (int)lander.y + lander.height;
+                            landerLines[1].pStart = new System.Windows.Point(landerLines[1].x1, landerLines[1].y1);
+                            landerLines[1].pEnd = new System.Windows.Point(landerLines[1].x2, landerLines[1].y2);
+
+                            landerLines[2].x1 = (int)lander.x;
+                            landerLines[2].y1 = (int)lander.y + lander.height;
+                            landerLines[2].x2 = (int)lander.x + lander.width;
+                            landerLines[2].y2 = (int)lander.y + lander.height;
+                            landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
+                            landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
+
+                            Thread.Sleep(2500);
+                            win = "false";
+                        }
+                    }
                     else
                     {
 
                     }
                 }
             }
-
-
             Refresh();
         }
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
-
             float x2 = Convert.ToSingle(lander.x);
             float y2 = Convert.ToSingle(lander.y);
 
-            //Draw Moon's Surface
-
+            //Draw Moon's Surface LA = Landing Area
             e.Graphics.DrawLine(drawPen, 0, 0, 39, 231);
             e.Graphics.DrawLine(drawPen, 39, 231, 140, 308);
-            e.Graphics.DrawLine(redPen, 140, 308, 203, 308); //LA
+            e.Graphics.DrawLine(drawPen, 140, 308, 203, 308); //LA
             e.Graphics.DrawLine(drawPen, 203, 309, 256, 491);
             e.Graphics.DrawLine(drawPen, 256, 491, 306, 432);
             e.Graphics.DrawLine(drawPen, 306, 432, 333, 500);
             e.Graphics.DrawLine(drawPen, 333, 500, 371, 528);
             e.Graphics.DrawLine(drawPen, 371, 528, 388, 627);
-            e.Graphics.DrawLine(redPen, 388, 627, 473, 627); //LA
+            e.Graphics.DrawLine(drawPen, 388, 627, 473, 627); //LA
             e.Graphics.DrawLine(drawPen, 473, 627, 506, 552);
             e.Graphics.DrawLine(drawPen, 506, 552, 535, 607);
             e.Graphics.DrawLine(drawPen, 535, 607, 578, 500);
             e.Graphics.DrawLine(drawPen, 578, 500, 636, 615);
-            e.Graphics.DrawLine(redPen, 636, 615, 732, 615); //LA
+            e.Graphics.DrawLine(drawPen, 636, 615, 732, 615); //LA
             e.Graphics.DrawLine(drawPen, 732, 615, 790, 524);
             e.Graphics.DrawLine(redPen, 790, 524, 840, 524); //LA
             e.Graphics.DrawLine(drawPen, 840, 524, 869, 426);
             e.Graphics.DrawLine(drawPen, 869, 426, 980, 307);
             e.Graphics.DrawLine(drawPen, 980, 307, 1025, 189);
-            e.Graphics.DrawLine(redPen, 1025, 189, 1080, 189); //LA
+            e.Graphics.DrawLine(drawPen, 1025, 189, 1080, 189); //LA
             e.Graphics.DrawLine(drawPen, 1080, 189, 1166, 324);
             e.Graphics.DrawLine(drawPen, 1166, 324, 1271, 217);
             e.Graphics.DrawLine(drawPen, 1271, 217, 1370, 0);
 
-            //Hit box Lines
-            e.Graphics.DrawLine(drawPen, landerLines[0].x1, landerLines[0].y1, landerLines[0].x2, landerLines[0].y2);
-            e.Graphics.DrawLine(drawPen, landerLines[1].x1, landerLines[1].y1, landerLines[1].x2, landerLines[1].y2);
-            e.Graphics.DrawLine(drawPen, landerLines[2].x1, landerLines[2].y1, landerLines[2].x2, landerLines[2].y2);
-
+            ////Hit box Lines TESTING PURPOSES ONLY
+            //e.Graphics.DrawLine(drawPen, landerLines[0].x1, landerLines[0].y1, landerLines[0].x2, landerLines[0].y2);
+            //e.Graphics.DrawLine(drawPen, landerLines[1].x1, landerLines[1].y1, landerLines[1].x2, landerLines[1].y2);
+            //e.Graphics.DrawLine(drawPen, landerLines[2].x1, landerLines[2].y1, landerLines[2].x2, landerLines[2].y2);
 
 
             //find the centre of the hero to set the origin point where rotation will happen
@@ -485,11 +606,17 @@ namespace Lunar_Lander
                 e.Graphics.DrawString("You crashed and lost " + fuelLost + " fuel units." , drawFont, drawBrush, 500, 300);
             }
 
-            //Temp Angle reading
+            if (win == "true")
+            {
+                e.Graphics.DrawString("You landed and recived " + scoreAdd + " points.", drawFont, drawBrush, 500, 300); 
+            }
+
+            //UI Printing onto the screen
             e.Graphics.DrawString("Angle: " + lander.angle, drawFont, drawBrush, 1100, 10);
             e.Graphics.DrawString("Horizonal Speed: " + roundedX, drawFont, drawBrush, 1100, 40);
             e.Graphics.DrawString("Verical Speed: " + roundedY, drawFont, drawBrush, 1100, 70);
             e.Graphics.DrawString("Fuel: " + lander.fuel, drawFont, drawBrush, 1100, 100);
+            e.Graphics.DrawString("Score: " + score, drawFont, drawBrush, 50, 10);
         }
     }
 }

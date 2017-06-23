@@ -63,6 +63,26 @@ namespace Lunar_Lander.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap black {
+            get {
+                object obj = ResourceManager.GetObject("black", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap blueButton {
+            get {
+                object obj = ResourceManager.GetObject("blueButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap boomFinal {
             get {
                 object obj = ResourceManager.GetObject("boomFinal", resourceCulture);
@@ -86,6 +106,26 @@ namespace Lunar_Lander.Properties {
         internal static System.Drawing.Bitmap moonSurface {
             get {
                 object obj = ResourceManager.GetObject("moonSurface", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap redButton {
+            get {
+                object obj = ResourceManager.GetObject("redButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap yellowButton {
+            get {
+                object obj = ResourceManager.GetObject("yellowButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
