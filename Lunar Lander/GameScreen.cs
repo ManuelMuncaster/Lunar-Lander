@@ -19,7 +19,7 @@ namespace Lunar_Lander
     public partial class GameScreen : UserControl
     {
         //Bool values for key presses
-        Boolean leftArrowDown, rightArrowDown, downArrowDown, upArrowDown, escapeDown, spaceDown;
+        Boolean BDown, MDown, NDown, escapeDown, spaceDown, upKeyDown, downKeydown, leftKeyDown, rightKeyDown;
 
         //creating graphic objects
         SolidBrush drawBrush = new SolidBrush(Color.White);
@@ -31,14 +31,14 @@ namespace Lunar_Lander
         public List<LineSegment> moonLines = new List<LineSegment>();
         public List<LineSegment> landerLines = new List<LineSegment>();
         public List<LineSegment> landingAreas = new List<LineSegment>();
+        public List<Image> landerAnimation = new List<Image>();
 
         public string explode, win;
-        public double roundedX, roundedY;
-        static public int fuelLost, crashed, score, scoreAdd;
+        public double roundedX, roundedYspeed, roundedY;
+        static public int fuelLost, crashed, score, scoreAdd, animate;
 
         Random fuelGen = new Random();
         Random scoreGen = new Random();
-
 
         Lander lander;
         Boolean didIntersect = false;
@@ -59,7 +59,7 @@ namespace Lunar_Lander
             int yLander = 100;
             int xSpeedLander = 1;
             int ySpeedLander = 1;
-            int angleSpeedLander = 2;
+            int angleSpeedLander = 1;
             int angleLander = 90;
             int imageLander = 0;
             int widthLander = 45;
@@ -67,6 +67,15 @@ namespace Lunar_Lander
             int fuel = 1000;
 
             lander = new Lander(xLander, yLander, xSpeedLander, ySpeedLander, angleLander, angleSpeedLander, imageLander, widthLander, heightLander, fuel);
+
+            score = 0;
+
+            landerAnimation.Add(Properties.Resources.landerboost1Final);
+            landerAnimation.Add(Properties.Resources.landerboost2Final);
+            landerAnimation.Add(Properties.Resources.landerboost3Final);
+            landerAnimation.Add(Properties.Resources.landerboost4Final);
+            landerAnimation.Add(Properties.Resources.landerboost5Final);
+
 
             #region Collision Lines
             LineSegment landerL1 = new LineSegment((int)lander.x, (int)lander.y, (int)lander.x, (int)lander.y + lander.height);
@@ -133,19 +142,29 @@ namespace Lunar_Lander
         {
             switch (e.KeyCode)
             {
-                case Keys.Left:
-                    leftArrowDown = true;
+                case Keys.Up:
+                    upKeyDown = true;
                     break;
                 case Keys.Down:
-                    downArrowDown = true;
+                    downKeydown = true;
+                    break;
+                case Keys.Left:
+                    leftKeyDown = true;
                     break;
                 case Keys.Right:
-                    rightArrowDown = true;
+                    rightKeyDown = true;
                     break;
-                case Keys.Up:
-                    upArrowDown = true;
+                case Keys.B:
+                    BDown = true;
+                    break;
+                case Keys.M:
+                    MDown = true;
+                    break;
+                case Keys.N:
+                    NDown = true;
                     break;
                 case Keys.Escape:
+                    Form1.menu2Player.Play();
                     escapeDown = true;
                     pause();
                     break;
@@ -161,17 +180,26 @@ namespace Lunar_Lander
         {
             switch (e.KeyCode)
             {
-                case Keys.Left:
-                    leftArrowDown = false;
+                case Keys.Up:
+                    upKeyDown = false;
                     break;
                 case Keys.Down:
-                    downArrowDown = false;
+                    downKeydown = false;
+                    break;
+                case Keys.Left:
+                    leftKeyDown = false;
                     break;
                 case Keys.Right:
-                    rightArrowDown = false;
+                    rightKeyDown = false;
                     break;
-                case Keys.Up:
-                    upArrowDown = false;
+                case Keys.B:
+                    BDown = false;
+                    break;
+                case Keys.M:
+                    MDown = false;
+                    break;
+                case Keys.N:
+                    NDown = false;
                     break;
                 case Keys.Space:
                     spaceDown = false;
@@ -179,7 +207,6 @@ namespace Lunar_Lander
                 case Keys.Escape:
                     escapeDown = false;
                     break;
-
                 default:
                     break;
             }
@@ -196,8 +223,8 @@ namespace Lunar_Lander
                 case DialogResult.No:
                     gameTimer.Enabled = true;
                     escapeDown = false;
-                    leftArrowDown = false;
-                    rightArrowDown = false;
+                    BDown = false;
+                    MDown = false;
                     break;
 
                 case DialogResult.Yes:
@@ -212,23 +239,33 @@ namespace Lunar_Lander
         }
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            if (leftArrowDown == true)
+            if (BDown == true)
             {
                 lander.Turn("left");
             }
 
-            if (rightArrowDown == true)
+            if (MDown == true)
             {
                 lander.Turn("right");
             }
 
-            if (upArrowDown == true)
+            if (NDown == true)
             {
+                Form1.boostPlayer.Play();
+                animate = 1;
+
                 if (lander.fuel  > 0)
                 {
                     lander.Boost("engage");
                     lander.fuel--;
                 }
+
+                else
+                {
+                    Form1.boostPlayer.Stop();
+                    animate = 0;
+                }
+
 
                 if (lander.ySpeed > 2.7)
                 {
@@ -236,9 +273,17 @@ namespace Lunar_Lander
                 }
             }
 
+            else
+            {
+                Form1.boostPlayer.Stop();
+                animate = 0;
+
+            }
+
             //Determines if you have crashed without any fuel left
             if (crashed == 1)
             {
+                gameTimer.Stop();
                 Form form = this.FindForm();
 
                 if (form !=null)
@@ -306,7 +351,7 @@ namespace Lunar_Lander
             //Checking hitbox of lander against the moon for intersections
             foreach (LineSegment l in landerLines)
             {
-                foreach(LineSegment m in moonLines)
+                foreach (LineSegment m in moonLines)
                 {
                     didIntersect = Intersection.LineSegementsIntersect(l, m, true);
 
@@ -318,10 +363,12 @@ namespace Lunar_Lander
                         explode = "true";
                         gameTimer.Start();
                         this.Refresh();
+                        Form1.boomPlayer.Play();
                         lander.x = 400;
                         lander.y = 100;
                         lander.angle = 90;
                         lander.ySpeed = 0.5;
+                        lander.xSpeed = 1;
                         #region Updating Postions
                         landerLines[0].x1 = (int)lander.x;
                         landerLines[0].y1 = (int)lander.y;
@@ -352,6 +399,7 @@ namespace Lunar_Lander
                         {
                             crashed = 1;
                         }
+
                         explode = "false";
                     }
                     else
@@ -378,11 +426,12 @@ namespace Lunar_Lander
                             explode = "true";
                             gameTimer.Start();
                             this.Refresh();
+                            Form1.boomPlayer.Play();
                             lander.x = 400;
                             lander.y = 100;
                             lander.angle = 90;
                             lander.ySpeed = 0.5;
-                            lander.xSpeed = 0.05;
+                            lander.xSpeed = 1;
 
                             landerLines[0].x1 = (int)lander.x;
                             landerLines[0].y1 = (int)lander.y;
@@ -418,15 +467,16 @@ namespace Lunar_Lander
 
                         else if (lander.y < 1.5)
                         {
-                            scoreAdd = scoreGen.Next(50, 100);
-                            score = score + scoreAdd;
                             gameTimer.Stop();
                             win = "true";
                             gameTimer.Start();
                             this.Refresh();
+                            Form1.winPlayer.Play();
                             lander.x = 400;
                             lander.y = 100;
                             lander.angle = 90;
+                            lander.ySpeed = 0.5;
+                            lander.xSpeed = 1;
 
                             landerLines[0].x1 = (int)lander.x;
                             landerLines[0].y1 = (int)lander.y;
@@ -448,12 +498,12 @@ namespace Lunar_Lander
                             landerLines[2].y2 = (int)lander.y + lander.height;
                             landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
                             landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
-
+                                
                             Thread.Sleep(2500);
                             win = "false";
                         }
 
-                        else if (lander.angle != 90)
+                        else if (lander.angle > 92 && lander.angle < 88)
                         {
                             fuelLost = fuelGen.Next(300, 400);
                             lander.fuel = lander.fuel - fuelLost;
@@ -461,9 +511,12 @@ namespace Lunar_Lander
                             explode = "true";
                             gameTimer.Start();
                             this.Refresh();
+                            Form1.boomPlayer.Play();
                             lander.x = 400;
                             lander.y = 100;
                             lander.angle = 90;
+                            lander.ySpeed = 0.5;
+                            lander.xSpeed = 1;
 
                             landerLines[0].x1 = (int)lander.x;
                             landerLines[0].y1 = (int)lander.y;
@@ -497,17 +550,58 @@ namespace Lunar_Lander
                             explode = "false";
                         }
 
-                        else if (lander.angle == 90)
+                        else if (lander.angle <= 92 && lander.angle >= 88)
                         {
-                            scoreAdd = scoreGen.Next(50, 100);
-                            score = score + scoreAdd;
+                            //Determines score by seeing where the lander's y is after the landing is complete. 
+
+                            roundedY = Math.Round(lander.y, 0);
+
+                            if (roundedY == 263 || roundedY == 264)
+                            {
+                                scoreAdd = scoreAdd + 100;
+                                score = score + scoreAdd;
+                                //scoreAdd = 0;
+
+                            }
+
+                            else if (roundedY == 583 || roundedY == 582)
+                            {
+                                scoreAdd = scoreAdd + 50;
+                                score = score + scoreAdd;
+                                //scoreAdd = 0;
+                            }
+
+                            else if (roundedY == 571 || roundedY == 570)
+                            {
+                                scoreAdd = scoreAdd + 50;
+                                score = score + scoreAdd;
+                                //scoreAdd = 0;
+                            }
+
+                            else if (roundedY == 479 || roundedY == 480)
+                            {
+                                scoreAdd = scoreAdd + 400;
+                                score = score + scoreAdd;
+                                //scoreAdd = 0;
+                            }
+
+                            else if (roundedY == 144 || roundedY == 145)
+                            {
+                                scoreAdd = scoreAdd + 150;
+                                score = score + scoreAdd;
+                                //scoreAdd = 0;
+                            }
+
                             gameTimer.Stop();
                             win = "true";
+                            Form1.winPlayer.Play();
                             gameTimer.Start();
                             this.Refresh();
                             lander.x = 400;
                             lander.y = 100;
                             lander.angle = 90;
+                            lander.ySpeed = 0.5;
+                            lander.xSpeed = 1;
 
                             landerLines[0].x1 = (int)lander.x;
                             landerLines[0].y1 = (int)lander.y;
@@ -532,6 +626,7 @@ namespace Lunar_Lander
 
                             Thread.Sleep(2500);
                             win = "false";
+                            scoreAdd = 0;
                         }
                     }
                     else
@@ -564,7 +659,7 @@ namespace Lunar_Lander
             e.Graphics.DrawLine(drawPen, 578, 500, 636, 615);
             e.Graphics.DrawLine(drawPen, 636, 615, 732, 615); //LA
             e.Graphics.DrawLine(drawPen, 732, 615, 790, 524);
-            e.Graphics.DrawLine(redPen, 790, 524, 840, 524); //LA
+            e.Graphics.DrawLine(drawPen, 790, 524, 840, 524); //LA
             e.Graphics.DrawLine(drawPen, 840, 524, 869, 426);
             e.Graphics.DrawLine(drawPen, 869, 426, 980, 307);
             e.Graphics.DrawLine(drawPen, 980, 307, 1025, 189);
@@ -591,14 +686,26 @@ namespace Lunar_Lander
             }
             else
             {
-                e.Graphics.DrawImage(Properties.Resources.landerFinal2, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
+                if (animate == 1)
+                {
+                    foreach(Image i in landerAnimation)
+                    {
+                        e.Graphics.DrawImage(i, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
+                    }
+                    
+                }
+
+                else
+                {
+                    e.Graphics.DrawImage(Properties.Resources.landerFinal2, 0 - lander.width / 2, 0 - lander.width / 2, lander.width, lander.height);
+                }
             }
 
             //reset to original origin point
             e.Graphics.ResetTransform();
 
             roundedX = Math.Round(lander.xSpeed, 2);
-            roundedY = Math.Round(lander.ySpeed, 2);
+            roundedYspeed = Math.Round(lander.ySpeed, 2);
 
             //Nessarcy because the tranformations by for the lander mess up the x and y coordinates for the message
             if (explode == "true")
@@ -608,13 +715,13 @@ namespace Lunar_Lander
 
             if (win == "true")
             {
-                e.Graphics.DrawString("You landed and recived " + scoreAdd + " points.", drawFont, drawBrush, 500, 300); 
+                e.Graphics.DrawString("You landed and received " + scoreAdd + " points.", drawFont, drawBrush, 500, 300); 
             }
 
             //UI Printing onto the screen
             e.Graphics.DrawString("Angle: " + lander.angle, drawFont, drawBrush, 1100, 10);
             e.Graphics.DrawString("Horizonal Speed: " + roundedX, drawFont, drawBrush, 1100, 40);
-            e.Graphics.DrawString("Verical Speed: " + roundedY, drawFont, drawBrush, 1100, 70);
+            e.Graphics.DrawString("Verical Speed: " + roundedYspeed, drawFont, drawBrush, 1100, 70);
             e.Graphics.DrawString("Fuel: " + lander.fuel, drawFont, drawBrush, 1100, 100);
             e.Graphics.DrawString("Score: " + score, drawFont, drawBrush, 50, 10);
         }

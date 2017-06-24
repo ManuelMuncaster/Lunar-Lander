@@ -34,6 +34,7 @@
             this.exitLabel = new System.Windows.Forms.Label();
             this.mainscreenPicture = new System.Windows.Forms.PictureBox();
             this.titleLabel3 = new System.Windows.Forms.Label();
+            this.titleLabel7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mainscreenPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,7 +53,7 @@
             // 
             this.startLabel.AutoSize = true;
             this.startLabel.Font = new System.Drawing.Font("8BIT WONDER", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startLabel.ForeColor = System.Drawing.Color.White;
+            this.startLabel.ForeColor = System.Drawing.Color.Red;
             this.startLabel.Location = new System.Drawing.Point(518, 419);
             this.startLabel.Name = "startLabel";
             this.startLabel.Size = new System.Drawing.Size(361, 27);
@@ -101,12 +102,24 @@
             this.titleLabel3.TabIndex = 5;
             this.titleLabel3.Text = "Press Green to Select Options";
             // 
+            // titleLabel7
+            // 
+            this.titleLabel7.AutoSize = true;
+            this.titleLabel7.Font = new System.Drawing.Font("8BIT WONDER", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titleLabel7.ForeColor = System.Drawing.Color.Lime;
+            this.titleLabel7.Location = new System.Drawing.Point(397, 642);
+            this.titleLabel7.Name = "titleLabel7";
+            this.titleLabel7.Size = new System.Drawing.Size(619, 20);
+            this.titleLabel7.TabIndex = 6;
+            this.titleLabel7.Text = "Joystick to Scroll Through Menus ";
+            // 
             // Mainscreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.titleLabel7);
             this.Controls.Add(this.titleLabel3);
             this.Controls.Add(this.mainscreenPicture);
             this.Controls.Add(this.exitLabel);
@@ -130,5 +143,6 @@
         private System.Windows.Forms.Label exitLabel;
         private System.Windows.Forms.PictureBox mainscreenPicture;
         private System.Windows.Forms.Label titleLabel3;
+        private System.Windows.Forms.Label titleLabel7;
     }
 }

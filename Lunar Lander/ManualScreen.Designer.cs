@@ -81,12 +81,12 @@
             this.manualLabel4.AutoSize = true;
             this.manualLabel4.Font = new System.Drawing.Font("8BIT WONDER", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.manualLabel4.ForeColor = System.Drawing.Color.White;
-            this.manualLabel4.Location = new System.Drawing.Point(86, 535);
+            this.manualLabel4.Location = new System.Drawing.Point(117, 528);
             this.manualLabel4.Name = "manualLabel4";
-            this.manualLabel4.Size = new System.Drawing.Size(1167, 40);
+            this.manualLabel4.Size = new System.Drawing.Size(1167, 60);
             this.manualLabel4.TabIndex = 6;
-            this.manualLabel4.Text = "How to Play: To succssfully land, make sure the landers angle is \r\n             9" +
-    "0 degress and the horizontal speed is less than 1";
+            this.manualLabel4.Text = "How to Play: To succssfully land, make sure the landers angle is \r\n\r\nbetween 88 a" +
+    "nd 92 degress; and the vertical speed is less than 1.5";
             // 
             // manualLabel5
             // 

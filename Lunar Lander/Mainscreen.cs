@@ -29,6 +29,8 @@ namespace Lunar_Lander
             {
                 case Keys.Up:
 
+                    Form1.menu1Player.Play();
+
                     if (index != 0)
                         index--;
                     else
@@ -37,6 +39,8 @@ namespace Lunar_Lander
                     }
                     break;
                 case Keys.Down:
+
+                    Form1.menu1Player.Play();
 
                     if (index != 2)
                         index++;
@@ -50,8 +54,10 @@ namespace Lunar_Lander
                 case Keys.Space:
                     switch (index)
                     {
+
                         //start button
                         case 0:
+                            Form1.menu2Player.Play();
 
                             ManualScreen mas = new ManualScreen();
                             mas.Location = new Point((form.Width - mas.Width) / 2, (form.Height - mas.Height) / 2);
@@ -74,6 +80,7 @@ namespace Lunar_Lander
 
                         //exit button
                         case 2:
+                            Form1.menu2Player.Play();
 
                             Application.Exit();
                             break;

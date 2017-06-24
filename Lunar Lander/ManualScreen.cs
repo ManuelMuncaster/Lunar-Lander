@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Lunar_Lander
 {
@@ -23,6 +24,8 @@ namespace Lunar_Lander
             {
                 Form form = this.FindForm();
 
+                Form1.menu2Player.Play();
+
                 GameScreen gs = new GameScreen();
                 gs.Location = new Point((form.Width - gs.Width) / 2, (form.Height - gs.Height) / 2);
 
@@ -33,6 +36,8 @@ namespace Lunar_Lander
             if (e.KeyCode == Keys.Escape)
             {
                 Form form = this.FindForm();
+
+                Form1.menu2Player.Play();
 
                 Mainscreen ms = new Mainscreen();
                 ms.Location = new Point((form.Width - ms.Width) / 2, (form.Height - ms.Height) / 2);

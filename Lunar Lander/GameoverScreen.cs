@@ -19,6 +19,7 @@ namespace Lunar_Lander
         public GameoverScreen()
         {
             InitializeComponent();
+            Form1.losePlayer.Play();
 
         }
 
@@ -27,6 +28,7 @@ namespace Lunar_Lander
             if (e.KeyCode == Keys.Space)
             {
                 Form form = this.FindForm();
+                Form1.menu2Player.Play();
 
                 Mainscreen ms = new Mainscreen();
                 ms.Location = new Point((form.Width - ms.Width) / 2, (form.Height - ms.Height) / 2);
@@ -39,7 +41,7 @@ namespace Lunar_Lander
 
         private void GameoverScreen_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawString("You Scored: " + GameScreen.score, drawFont, drawBrush, 550, 300);
+            e.Graphics.DrawString("You Scored: " + GameScreen.score + " points.", drawFont, drawBrush, 395, 300);
         }
     }
 

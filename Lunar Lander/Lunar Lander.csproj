@@ -36,6 +36,7 @@
     <Reference Include="Lines">
       <HintPath>E:\Downloads\Lines.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -168,6 +169,60 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\atari_boom.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\menu1.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\menu2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lose.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lose2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lose3.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shut_Down1.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loseV2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\booster.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\boosterV2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\booster2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\win.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\winV2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\landerboost1Final.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\landerboost2Final.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\landerboost3Final.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\landerboost4Final.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\landerboost5Final.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

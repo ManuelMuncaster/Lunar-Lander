@@ -42,6 +42,7 @@ namespace Lunar_Lander
             {
                 case Keys.Left:
                     {
+                        Form1.menu1Player.Play();
                         if (index != 0)
                         {
                             index--;
@@ -56,6 +57,7 @@ namespace Lunar_Lander
 
                 case Keys.Right:
                     {
+                        Form1.menu1Player.Play();
                         if (index != 2)
                         {
                             index++;
@@ -76,12 +78,14 @@ namespace Lunar_Lander
                         //yes button
 
                         case 1:
+                            Form1.menu2Player.Play();
                             result = DialogResult.No;
                             this.Close();
                             break;
 
                         //no button
                         case 2:
+                            Form1.menu2Player.Play();
                             result = DialogResult.Yes;
                             this.Close();
                             break;
