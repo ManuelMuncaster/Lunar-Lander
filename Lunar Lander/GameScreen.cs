@@ -25,7 +25,8 @@ namespace Lunar_Lander
         SolidBrush drawBrush = new SolidBrush(Color.White);
         Font drawFont = new Font("8bit Wonder", 10, FontStyle.Bold);
         Pen drawPen = new Pen(Color.White);
-        Pen redPen = new Pen(Color.Red);
+        //FOR TESTS ONLY
+        //Pen redPen = new Pen(Color.Red);
 
         //creating lists
         public List<LineSegment> moonLines = new List<LineSegment>();
@@ -54,7 +55,7 @@ namespace Lunar_Lander
 
         public void Onstart()
         {
-            //Setting up ints and Collision Lines
+            //Setting up ints, collision lines, and animation frames
             int xLander = 400;
             int yLander = 100;
             int xSpeedLander = 1;
@@ -104,6 +105,7 @@ namespace Lunar_Lander
             LineSegment moonL16 = new LineSegment(1080, 189, 1166, 324);
             LineSegment moonL17 = new LineSegment(1166, 324, 1271, 217);
             LineSegment moonL18 = new LineSegment(1271, 217, 1370, 0);
+
 
             LineSegment landingArea1= new LineSegment(140, 308, 203, 308); 
             LineSegment landingArea2= new LineSegment(388, 627, 473, 627); 
@@ -369,7 +371,6 @@ namespace Lunar_Lander
                         lander.angle = 90;
                         lander.ySpeed = 0.5;
                         lander.xSpeed = 1;
-                        #region Updating Postions
                         landerLines[0].x1 = (int)lander.x;
                         landerLines[0].y1 = (int)lander.y;
                         landerLines[0].x2 = (int)lander.x;
@@ -390,7 +391,6 @@ namespace Lunar_Lander
                         landerLines[2].y2 = (int)lander.y + lander.height;
                         landerLines[2].pStart = new System.Windows.Point(landerLines[2].x1, landerLines[2].y1);
                         landerLines[2].pEnd = new System.Windows.Point(landerLines[2].x2, landerLines[2].y2);
-                        #endregion
 
                         Thread.Sleep(2500);
                         fuelLost = 0;
@@ -560,36 +560,29 @@ namespace Lunar_Lander
                             {
                                 scoreAdd = scoreAdd + 100;
                                 score = score + scoreAdd;
-                                //scoreAdd = 0;
-
                             }
 
                             else if (roundedY == 583 || roundedY == 582)
                             {
                                 scoreAdd = scoreAdd + 50;
-                                score = score + scoreAdd;
-                                //scoreAdd = 0;
                             }
 
                             else if (roundedY == 571 || roundedY == 570)
                             {
                                 scoreAdd = scoreAdd + 50;
                                 score = score + scoreAdd;
-                                //scoreAdd = 0;
                             }
 
                             else if (roundedY == 479 || roundedY == 480)
                             {
                                 scoreAdd = scoreAdd + 400;
                                 score = score + scoreAdd;
-                                //scoreAdd = 0;
                             }
 
                             else if (roundedY == 144 || roundedY == 145)
                             {
                                 scoreAdd = scoreAdd + 150;
                                 score = score + scoreAdd;
-                                //scoreAdd = 0;
                             }
 
                             gameTimer.Stop();

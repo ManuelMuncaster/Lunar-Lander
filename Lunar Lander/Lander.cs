@@ -12,7 +12,6 @@ namespace Lunar_Lander
     {
         public int angle, angleSpeed, image, width, height, fuel;
         public double x, y, xSpeed, ySpeed;
-        public string explode;
 
         public Lander (double _x, double _y, double _xSpeed, double _ySpeed, int _angle, int _angleSpeed, int _image, int _width, int _height, int _fuel)
         {

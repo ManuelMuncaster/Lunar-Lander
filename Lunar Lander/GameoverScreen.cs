@@ -12,7 +12,6 @@ namespace Lunar_Lander
 {
     public partial class GameoverScreen : UserControl
     {
-        int index = 0;
         SolidBrush drawBrush = new SolidBrush(Color.White);
         Font drawFont = new Font("8bit Wonder", 25, FontStyle.Bold);
 
